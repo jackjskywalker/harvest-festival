@@ -1,0 +1,232 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroFestival from '../components/HeroFestival.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BrandMark from '../components/BrandMark.astro';
+import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
+import StarScatter from '../components/StarScatter.astro';
+import { event, org } from '../data/site';
+
+// Lineup tease - confirmed speakers + headliner TBA, sorted by order.
+const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
+const headliner = artists.find((a) => a.data.kind === 'headliner');
+const speakers = artists.filter((a) => a.data.kind === 'speaker');
+---
+<BaseLayout
+  title="Harvest Festival - Oct 24, 2026 · Maranatha Farms, Forest VA"
+  description="A day of worship, music, and the Gospel for the whole family. Harvest Festival - October 24, 2026 at Maranatha Farms in Forest, Virginia. A ministry of Reap the Harvest Foundation."
+  eventSchema={true}
+>
+  <HeroFestival />
+
+  <!-- BLOCK 2 - Lineup tease -->
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="Lineup">The artists.</SectionHeading>
+
+      <ul class="lineup-grid" role="list">
+        <li class="lineup-plate is-tba">
+          <BrandMark name="hf-stars" decorative class="plate-mark" />
+          <span class="plate-name">{headliner?.data.tbaLabel ?? 'Headlining Artist - TBA'}</span>
+          <span class="plate-role">Headliner</span>
+        </li>
+        {speakers.map((s) => (
+          <li class="lineup-plate">
+            <span class="plate-name">{s.data.name}</span>
+            <span class="plate-role">{s.data.role}</span>
+          </li>
+        ))}
+        <li class="lineup-plate is-more">
+          <span class="plate-name">More artists to be announced</span>
+        </li>
+      </ul>
+
+      <div class="center-cta">
+        <a href="/lineup" class="btn btn--primary">See Full Lineup</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 3 - What it is (Rust dark band) -->
+  <section class="section band-rust on-dark">
+    <StarScatter tone="var(--rust-deep)" class="band-stars" />
+    <BrandMark name="harvey-running" decorative class="band-horse" />
+    <div class="container band-inner">
+      <h2 class="display band-title">More than a festival.</h2>
+      <p class="band-body lede">
+        The Harvest Festival is a full day of live worship, nationally recognized speakers,
+        and Gospel outreach - set on the fields of Maranatha Farms in Forest, Virginia.
+        Family-friendly. All ages. And every ticket helps send a kid to a free sports camp.
+      </p>
+      <p class="band-mission script">A ministry of {org.name}</p>
+    </div>
+  </section>
+
+  <!-- BLOCK 4 - Ticket CTA band (Tomato) -->
+  <section class="section band-tomato on-dark">
+    <div class="container band-cta-inner">
+      <div>
+        <h2 class="display band-title">Tickets are coming.</h2>
+        <p class="band-body">
+          General admission. Family packages available. Group rates for churches and schools.
+        </p>
+        <p class="price-note">Pricing announced soon - be the first to know.</p>
+      </div>
+      <div class="band-cta-actions">
+        <a href="/tickets" class="btn btn--cream">Buy Tickets</a>
+        <a href="/tickets#group" class="btn btn--ghost-light">Group Inquiry</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 5 - Sponsorship callout (checkerboard texture) -->
+  <section class="section sponsor-callout">
+    <div class="container sponsor-inner">
+      <div class="sponsor-copy">
+        <p class="eyebrow">Founding Sponsors</p>
+        <h2 class="display sponsor-title">Be part of what God is doing here.</h2>
+        <p class="lede">
+          Sponsorship opportunities are available for businesses and organizations who want
+          to put their name on one of the largest Christian events in Central Virginia. From
+          the Presenting Sponsor to Banner partners - every level funds free camps and reaches
+          thousands.
+        </p>
+        <p class="tier-preview">Presenting · Stage · Field · Banner</p>
+        <a href="/sponsors" class="btn btn--primary">View Sponsorship Tiers</a>
+      </div>
+      <div class="sponsor-deco" aria-hidden="true">
+        <div class="checker"></div>
+        <BrandMark name="hf-oval" decorative class="sponsor-oval" />
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 6 - Venue preview -->
+  <section class="section">
+    <div class="container venue-grid">
+      <PhotoPlaceholder
+        label="Maranatha Farms - wide field & stage view"
+        ratio="4 / 3"
+        mark="harvey-running"
+        tone="moss"
+      />
+      <div class="venue-card">
+        <h2 class="display venue-title">{event.venue} · {event.city}</h2>
+        <p class="lede">
+          Set on the rolling fields of Maranatha Farms just outside Lynchburg - easy access,
+          wide open space, and a backdrop built for a day like this.
+        </p>
+        <ul class="venue-details">
+          <li><span class="vd-label">Gates open</span><span class="vd-value">TBD</span></li>
+          <li><span class="vd-label">Parking</span><span class="vd-value">Details soon</span></li>
+          <li><span class="vd-label">Weather</span><span class="vd-value">Rain or shine</span></li>
+        </ul>
+        <a href="/venue" class="btn btn--ghost">Venue + Info</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 7 - Why it matters (quiet) -->
+  <section class="section why-band">
+    <div class="container-narrow why-inner">
+      <BrandMark name="cross-of-stars" decorative class="why-cross" />
+      <h2 class="display why-title">Every ticket funds a free camp.</h2>
+      <p class="lede">
+        Reap the Harvest Foundation runs free sports camps for kids who can't afford them. The
+        Harvest Festival is how we keep them free. Your ticket isn't just a ticket - it's a kid
+        on a field, hearing the Gospel for the first time.
+      </p>
+      <div class="why-actions">
+        <a href="/why-it-matters" class="btn btn--ghost">Why It Matters</a>
+        <a href={org.url} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+          About RTH&nbsp;↗
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .center-cta { display: flex; justify-content: center; margin-top: var(--space-xl); }
+
+  /* Lineup plates */
+  .lineup-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-m);
+    margin-top: var(--space-xl);
+  }
+  .lineup-plate {
+    display: grid;
+    gap: 0.3rem;
+    align-content: center;
+    justify-items: center;
+    text-align: center;
+    padding: var(--space-l) var(--space-m);
+    border-radius: var(--radius-lg);
+    background: var(--cream-warm);
+    border: var(--border);
+    min-height: 160px;
+  }
+  .plate-name { font-family: var(--font-display); font-style: italic; font-weight: 800; font-size: var(--step-2); color: var(--hf-rust); }
+  .plate-role { font-size: var(--step--1); letter-spacing: 0.16em; text-transform: uppercase; color: var(--hf-moss); }
+  .lineup-plate.is-tba { background: color-mix(in srgb, var(--hf-tomato) 10%, var(--hf-cream)); border-color: color-mix(in srgb, var(--hf-tomato) 30%, transparent); }
+  .lineup-plate.is-tba .plate-mark { width: 64px; color: var(--hf-tomato); margin-bottom: 0.3rem; }
+  .lineup-plate.is-more { background: color-mix(in srgb, var(--hf-moss) 12%, var(--hf-cream)); border-style: dashed; }
+  .lineup-plate.is-more .plate-name { font-size: var(--step-1); color: var(--hf-moss); }
+
+  /* Dark / colored bands */
+  .band-rust { position: relative; background: var(--hf-rust); color: var(--cream-warm); overflow: hidden; isolation: isolate; }
+  .band-rust :global(.band-stars) { z-index: -1; opacity: 0.7; }
+  .band-rust :global(.band-horse) {
+    position: absolute; right: -4%; bottom: -10%; width: min(560px, 60%);
+    color: var(--rust-deep); opacity: 0.55; z-index: -1; pointer-events: none;
+  }
+  .band-inner { position: relative; max-width: 40rem; display: grid; gap: var(--space-m); }
+  .band-title { font-size: var(--step-4); }
+  .band-rust .band-title, .band-tomato .band-title { color: var(--cream-warm); }
+  .band-body { color: color-mix(in srgb, var(--cream-warm) 92%, transparent); }
+  .band-mission { font-size: var(--step-2); color: var(--hf-clear-skies); }
+
+  .band-tomato { background: var(--hf-tomato); color: var(--cream-warm); }
+  .band-cta-inner { display: grid; gap: var(--space-l); align-items: center; }
+  @media (min-width: 820px) { .band-cta-inner { grid-template-columns: 1.6fr 1fr; } }
+  .price-note { font-size: var(--step--1); letter-spacing: 0.04em; color: var(--hf-clear-skies); margin-top: var(--space-xs); }
+  .band-cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+
+  /* Sponsorship callout */
+  .sponsor-inner { display: grid; gap: var(--space-xl); align-items: center; }
+  @media (min-width: 880px) { .sponsor-inner { grid-template-columns: 1.5fr 1fr; } }
+  .sponsor-copy { display: grid; gap: var(--space-m); justify-items: start; }
+  .sponsor-title { font-size: var(--step-4); }
+  .tier-preview { font-family: var(--font-head); font-weight: 600; font-size: var(--step-1); color: var(--hf-moss); }
+  .sponsor-deco { position: relative; display: grid; place-items: center; min-height: 220px; }
+  .checker {
+    position: absolute; inset: 0;
+    background-image:
+      conic-gradient(var(--hf-soot) 90deg, transparent 90deg 180deg, var(--hf-soot) 180deg 270deg, transparent 270deg);
+    background-size: 36px 36px;
+    opacity: 0.07;
+    border-radius: var(--radius-lg);
+  }
+  .sponsor-deco :global(.sponsor-oval) { position: relative; width: 70%; color: var(--hf-tomato); }
+
+  /* Venue */
+  .venue-grid { display: grid; gap: var(--space-xl); align-items: center; }
+  @media (min-width: 820px) { .venue-grid { grid-template-columns: 1.2fr 1fr; } }
+  .venue-card { display: grid; gap: var(--space-m); justify-items: start; }
+  .venue-title { font-size: var(--step-3); }
+  .venue-details { list-style: none; display: grid; gap: 0.5rem; width: 100%; }
+  .venue-details li { display: flex; justify-content: space-between; gap: var(--space-m); padding-block: 0.55rem; border-bottom: var(--border); }
+  .vd-label { color: var(--hf-moss); font-family: var(--font-head); font-weight: 600; }
+  .vd-value { color: var(--hf-soot); }
+
+  /* Why band */
+  .why-band { background: var(--cream-warm); }
+  .why-inner { display: grid; gap: var(--space-m); justify-items: center; text-align: center; }
+  .why-band :global(.why-cross) { width: 40px; color: var(--hf-tomato); margin-bottom: var(--space-xs); }
+  .why-title { font-size: var(--step-4); }
+  .why-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); justify-content: center; margin-top: var(--space-s); }
+</style>

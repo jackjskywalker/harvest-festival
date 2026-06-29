@@ -1,0 +1,48 @@
+---
+import PhotoPlaceholder from './PhotoPlaceholder.astro';
+interface Props {
+  name: string;
+  role: string;
+  body?: string;      // rendered bio (HTML) - optional
+  photo?: string;
+  featured?: boolean;
+}
+const { name, role, body, photo, featured = false } = Astro.props;
+---
+<article class:list={['artist-card', { featured }]}>
+  <div class="artist-photo">
+    {photo
+      ? <img src={photo} alt={`${name} - ${role} at the Harvest Festival`} loading="lazy" decoding="async" />
+      : <PhotoPlaceholder label={`${name} - portrait`} ratio="4 / 5" mark="none" tone="cream" />}
+  </div>
+  <div class="artist-body">
+    <p class="eyebrow">{role}</p>
+    <h3 class="display artist-name">{name}</h3>
+    {body && <div class="artist-bio" set:html={body} />}
+    <slot />
+  </div>
+</article>
+
+<style>
+  .artist-card {
+    display: grid;
+    gap: var(--space-m);
+    background: var(--cream-warm);
+    border: var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-m);
+    box-shadow: var(--shadow);
+  }
+  .artist-card.featured {
+    border-color: color-mix(in srgb, var(--hf-tomato) 45%, transparent);
+    box-shadow: var(--shadow-lg);
+  }
+  @media (min-width: 680px) {
+    .artist-card { grid-template-columns: 0.8fr 1.4fr; align-items: center; gap: var(--space-l); }
+  }
+  .artist-photo { border-radius: var(--radius); overflow: hidden; }
+  .artist-photo img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
+  .artist-name { font-size: var(--step-3); margin-top: 0.15rem; }
+  .artist-bio { margin-top: var(--space-s); color: color-mix(in srgb, var(--hf-soot) 88%, transparent); }
+  .artist-bio :global(p) { margin-bottom: 0.6em; }
+</style>

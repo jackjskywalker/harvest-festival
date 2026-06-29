@@ -1,0 +1,73 @@
+---
+/* Sponsorship tier card. The Presenting tier is `featured` → visually dominant. */
+interface Props {
+  tier: string;
+  price: number;
+  slots: number;
+  featured?: boolean;
+  artistDinner?: boolean;
+  body?: string;
+}
+const { tier, price, slots, featured = false, artistDinner = false, body } = Astro.props;
+const priceFmt = '$' + price.toLocaleString('en-US');
+const each = slots > 1 ? ' each' : '';
+---
+<article class:list={['tier-card', { featured }]}>
+  {featured && <span class="tier-flag">One slot · First and only</span>}
+  <header class="tier-head">
+    <h3 class="display tier-name">{tier}</h3>
+    <p class="tier-availability">
+      {slots} available
+    </p>
+  </header>
+  <p class="tier-price">{priceFmt}<span class="tier-each">{each}</span></p>
+  {body && <p class="tier-body">{body}</p>}
+  {artistDinner && (
+    <p class="tier-perk">★ Includes Artist Dinner invitation</p>
+  )}
+  <a href="#claim" class:list={['btn', featured ? 'btn--cream' : 'btn--primary', 'tier-cta']}>
+    Claim this tier
+  </a>
+</article>
+
+<style>
+  .tier-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding: var(--space-l);
+    border-radius: var(--radius-lg);
+    background: var(--cream-warm);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    height: 100%;
+  }
+  .tier-card.featured {
+    background: var(--hf-tomato);
+    color: var(--cream-warm);
+    border-color: transparent;
+    box-shadow: var(--shadow-lg);
+  }
+  .tier-flag {
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--cream-warm);
+    color: var(--tomato-deep);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .tier-name { font-size: var(--step-2); }
+  .tier-availability { font-size: var(--step--1); letter-spacing: 0.04em; opacity: 0.75; text-transform: uppercase; }
+  .featured .tier-availability { opacity: 0.9; }
+  .tier-price { font-family: var(--font-head); font-weight: 700; font-size: var(--step-3); line-height: 1; }
+  .tier-each { font-size: var(--step-0); font-weight: 500; opacity: 0.7; }
+  .tier-body { font-size: var(--step-0); color: color-mix(in srgb, currentColor 88%, transparent); }
+  .tier-perk { font-size: var(--step--1); font-weight: 600; color: var(--hf-moss); }
+  .featured .tier-perk { color: var(--hf-clear-skies); }
+  .tier-cta { margin-top: auto; justify-content: center; }
+</style>

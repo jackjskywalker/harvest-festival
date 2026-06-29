@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import TicketTier from '../components/TicketTier.astro';
+import { event, ticketTiers } from '../data/site';
+---
+<BaseLayout
+  title="Tickets - Harvest Festival"
+  description="Get your tickets to the Harvest Festival - October 24, 2026 at Maranatha Farms in Forest, Virginia. General admission, family packs, and group rates for churches and schools."
+>
+  <PageHero eyebrow="Tickets" variant="tomato">
+    Get your tickets.
+    <Fragment slot="sub">
+      {event.date} · {event.venue} · {event.city} · Gates open TBD
+    </Fragment>
+  </PageHero>
+
+  <!-- Ticket tiers -->
+  <section class="section" id="buy">
+    <div class="container">
+      <div class="ticket-grid">
+        {ticketTiers.map((t) => (
+          <TicketTier
+            name={t.name}
+            price={t.price}
+            unit={t.unit}
+            features={t.features}
+            note={t.note}
+            featured={t.featured}
+          />
+        ))}
+      </div>
+      <p class="ticket-disclaimer">
+        Pricing and on-sale date will be confirmed soon. Want to be first in line?
+        <a href="#group">Tell us you're coming.</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Group + church -->
+  <section class="section band-rust on-dark" id="group">
+    <div class="container group-inner">
+      <div class="group-copy">
+        <h2 class="display group-title">Coming as a group?</h2>
+        <p class="lede">
+          We offer group rates for churches, schools, and youth organizations. Bring your
+          whole community.
+        </p>
+      </div>
+
+      <form class="group-form" name="group-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="group-inquiry" />
+        <p class="hp"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <div class="field">
+          <label for="g-name">Your name</label>
+          <input id="g-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="g-org">Church / organization</label>
+          <input id="g-org" name="organization" type="text" autocomplete="organization" required />
+        </div>
+        <div class="field">
+          <label for="g-size">Estimated group size</label>
+          <input id="g-size" name="group_size" type="number" min="2" inputmode="numeric" required />
+        </div>
+        <div class="field">
+          <label for="g-email">Email</label>
+          <input id="g-email" name="email" type="email" autocomplete="email" required />
+        </div>
+        <button type="submit" class="btn btn--cream group-submit">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- What to know -->
+  <section class="section">
+    <div class="container-narrow">
+      <h2 class="display know-title">What to know</h2>
+      <ul class="know-list">
+        <li><strong>All ages welcome.</strong> A family-friendly event for everyone.</li>
+        <li><strong>Rain or shine.</strong> The festival happens regardless of weather.</li>
+        <li><strong>Refunds & transfers.</strong> Policy to be published with ticket sales.</li>
+        <li><strong>Questions?</strong> Email <a href={`mailto:${event.contactEmail}`}>{event.contactEmail}</a>.</li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ticket-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .ticket-disclaimer { text-align: center; margin-top: var(--space-xl); color: var(--hf-moss); }
+  .ticket-disclaimer a { color: var(--hf-tomato); }
+
+  .band-rust { background: var(--hf-rust); color: var(--cream-warm); }
+  .group-inner { display: grid; gap: var(--space-xl); align-items: start; }
+  @media (min-width: 820px) { .group-inner { grid-template-columns: 1fr 1.2fr; } }
+  .group-title { font-size: var(--step-4); color: var(--cream-warm); }
+  .group-copy .lede { color: color-mix(in srgb, var(--cream-warm) 90%, transparent); margin-top: var(--space-m); }
+
+  .group-form { display: grid; gap: var(--space-m); background: var(--cream-warm); color: var(--hf-soot); padding: var(--space-l); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+  .field { display: grid; gap: 0.35rem; }
+  .field label { font-family: var(--font-head); font-weight: 600; font-size: var(--step--1); }
+  .field input {
+    padding: 0.7rem 0.85rem; border-radius: 10px;
+    border: 1.5px solid color-mix(in srgb, var(--hf-soot) 22%, transparent);
+    background: #fff;
+  }
+  .field input:focus-visible { outline: 3px solid var(--hf-tomato); outline-offset: 1px; border-color: var(--hf-tomato); }
+  .group-submit { justify-content: center; margin-top: var(--space-xs); }
+  .hp { position: absolute; left: -9999px; }
+
+  .know-title { font-size: var(--step-3); margin-bottom: var(--space-m); }
+  .know-list { list-style: none; display: grid; gap: var(--space-s); }
+  .know-list li { padding: var(--space-m); border-radius: var(--radius); background: var(--cream-warm); border: var(--border); }
+  .know-list a { color: var(--hf-tomato); }
+</style>

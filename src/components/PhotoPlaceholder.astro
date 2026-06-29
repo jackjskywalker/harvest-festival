@@ -1,0 +1,65 @@
+---
+/* A clearly-labeled placeholder for real photography.
+   No stock imagery - every image slot is marked until a real photo arrives.
+   Decorated with Harvey so empty slots still feel on-brand. */
+interface Props {
+  label: string;            // e.g. "Maranatha Farms - wide field shot"
+  ratio?: string;           // CSS aspect-ratio, default 16/9
+  mark?: 'harvey-running' | 'harvey-rearing' | 'none';
+  tone?: 'cream' | 'rust' | 'moss' | 'tomato';
+  class?: string;
+}
+import BrandMark from './BrandMark.astro';
+const { label, ratio = '16 / 9', mark = 'harvey-running', tone = 'moss', class: className = '' } = Astro.props;
+---
+<figure class={`photo-ph tone-${tone} ${className}`} style={`aspect-ratio:${ratio}`}>
+  {mark !== 'none' && <BrandMark name={mark} decorative class="photo-ph-mark" />}
+  <figcaption>
+    <span class="photo-ph-tag">Photo needed</span>
+    <span class="photo-ph-label">{label}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .photo-ph {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1.5px dashed color-mix(in srgb, var(--hf-soot) 28%, transparent);
+    width: 100%;
+  }
+  .tone-cream  { background: var(--cream-warm); color: var(--hf-moss); }
+  .tone-rust   { background: var(--hf-rust);   color: color-mix(in srgb, var(--cream-warm) 30%, transparent); }
+  .tone-moss   { background: color-mix(in srgb, var(--hf-moss) 18%, var(--hf-cream)); color: var(--hf-moss); }
+  .tone-tomato { background: color-mix(in srgb, var(--hf-tomato) 16%, var(--hf-cream)); color: var(--tomato-deep); }
+
+  .photo-ph :global(.photo-ph-mark) {
+    position: absolute;
+    width: 46%;
+    opacity: 0.16;
+    color: currentColor;
+  }
+  figcaption {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 0.3rem;
+    justify-items: center;
+    text-align: center;
+    padding: var(--space-m);
+  }
+  .photo-ph-tag {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .photo-ph-label {
+    font-family: var(--font-head);
+    font-size: var(--step-0);
+    max-width: 30ch;
+  }
+</style>

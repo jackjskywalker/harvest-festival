@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ArtistCard from '../components/ArtistCard.astro';
+import TBACard from '../components/TBACard.astro';
+import { event } from '../data/site';
+
+const all = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
+const headliner = all.find((a) => a.data.kind === 'headliner');
+const speakers = all.filter((a) => a.data.kind === 'speaker');
+const extraArtists = all.filter((a) => a.data.kind === 'artist' && a.data.status === 'confirmed');
+
+// Pre-render speaker bios to HTML.
+const speakerContent = await Promise.all(
+  speakers.map(async (s) => {
+    const { Content } = await s.render();
+    return { entry: s, Content };
+  })
+);
+---
+<BaseLayout
+  title="Lineup - Harvest Festival"
+  description="See who's taking the stage at the Harvest Festival on October 24, 2026 - speakers Tim Tebow and Jonathan Pokluda, with more artists to be announced."
+>
+  <PageHero eyebrow="The Lineup" variant="rust">
+    The Lineup.
+    <Fragment slot="sub">{event.date} · {event.venue}, {event.cityShort}</Fragment>
+  </PageHero>
+
+  <!-- Headliner -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow block-label">Headlining Worship</p>
+      {headliner && (
+        <TBACard
+          role="Headlining Worship"
+          label={headliner.data.tbaLabel ?? 'To Be Announced'}
+          note="Our headlining worship act will be announced soon."
+        />
+      )}
+    </div>
+  </section>
+
+  <!-- Speakers -->
+  <section class="section band-cream">
+    <div class="container">
+      <p class="eyebrow block-label">Speakers</p>
+      <div class="artist-stack">
+        {speakerContent.map(({ entry, Content }, i) => (
+          <ArtistCard
+            name={entry.data.name}
+            role={entry.data.role}
+            photo={entry.data.photo || undefined}
+            featured={i === 0}
+          >
+            <div class="artist-bio"><Content /></div>
+          </ArtistCard>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Supporting artists -->
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow block-label">More Artists</p>
+      <div class="more-grid">
+        {extraArtists.map((a) => (
+          <ArtistCard name={a.data.name} role={a.data.role} photo={a.data.photo || undefined} />
+        ))}
+        <TBACard role="More Artists" label="More to be announced" note="Additional artists are being confirmed - check back soon." />
+      </div>
+
+      <div class="lineup-cta">
+        <a href="/tickets" class="btn btn--primary">Get Tickets</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .block-label { margin-bottom: var(--space-l); }
+  .band-cream { background: var(--cream-warm); }
+  .artist-stack { display: grid; gap: var(--space-l); }
+  .more-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .lineup-cta { display: flex; justify-content: center; margin-top: var(--space-xl); }
+  /* bios inside the slot inherit card styling */
+  .artist-bio :global(p) { margin-bottom: 0.6em; }
+</style>

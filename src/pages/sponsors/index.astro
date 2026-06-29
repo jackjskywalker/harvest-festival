@@ -1,0 +1,193 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import SponsorTierCard from '../../components/SponsorTierCard.astro';
+import BenefitsTable from '../../components/BenefitsTable.astro';
+import BrandMark from '../../components/BrandMark.astro';
+import { event } from '../../data/site';
+
+const tiers = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
+const tierContent = await Promise.all(
+  tiers.map(async (t) => {
+    const { Content } = await t.render();
+    return { data: t.data, Content };
+  })
+);
+---
+<BaseLayout
+  title="Sponsor the Harvest Festival"
+  description="Become a founding sponsor of the Harvest Festival - 10,000 to 15,000 expected attendees, national artists, and a Gospel mission. Presenting, Stage, Field, and Banner tiers from $5,000 to $50,000."
+>
+  <PageHero eyebrow="Founding Sponsors" variant="rust">
+    Be a founding sponsor.
+    <Fragment slot="sub">
+      The Harvest Festival is one of the largest Christian events Central Virginia has ever
+      seen - {event.attendance} expected attendees, national artists, and a Gospel mission at
+      the center. Your brand belongs here.
+    </Fragment>
+    <Fragment slot="actions">
+      <a href="#tiers" class="btn btn--cream">View Tiers</a>
+      <a href="#claim" class="btn btn--ghost-light">Talk to Us</a>
+    </Fragment>
+  </PageHero>
+
+  <!-- Why sponsor -->
+  <section class="section">
+    <div class="container-narrow why-sponsor">
+      <h2 class="display section-title">More than a logo placement.</h2>
+      <p class="lede">
+        Every sponsor is a partner in the mission. Your investment puts your brand in front of
+        thousands of families, funds free sports camps for kids who can't afford them, and
+        plants your name on a day that matters. This is not a table at a gala - it's a field
+        full of people who will remember who showed up.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tier overview -->
+  <section class="section band-cream" id="tiers">
+    <div class="container">
+      <p class="eyebrow center-label">Sponsorship Tiers</p>
+      <div class="tier-grid">
+        {tierContent.map(({ data, Content }) => (
+          <div class:list={['tier-cell', { 'is-featured': data.featured }]}>
+            <SponsorTierCard
+              tier={data.tier}
+              price={data.price}
+              slots={data.slots}
+              featured={data.featured}
+              artistDinner={data.artistDinner}
+            >
+            </SponsorTierCard>
+            <div class="tier-desc"><Content /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits comparison -->
+  <section class="section">
+    <div class="container">
+      <h2 class="display section-title center">What each tier includes.</h2>
+      <p class="benefits-sub">A side-by-side look at every sponsorship level.</p>
+      <BenefitsTable />
+    </div>
+  </section>
+
+  <!-- Artist dinner callout -->
+  <section class="section">
+    <div class="container">
+      <aside class="dinner-callout">
+        <div class="dinner-copy">
+          <h2 class="display dinner-title">The Artist Dinner.</h2>
+          <p>
+            Presenting and Stage Sponsors receive an exclusive invitation to the Harvest
+            Festival Artist Dinner - an intimate evening with the headlining artists and RTH
+            leadership the night before the festival. Limited seats. This is not a public event.
+          </p>
+          <a href="/sponsors/artist-dinner" class="btn btn--primary">Learn More →</a>
+        </div>
+        <BrandMark name="hf-script-ring" decorative class="dinner-mark" />
+      </aside>
+    </div>
+  </section>
+
+  <!-- Claim form -->
+  <section class="section band-rust on-dark" id="claim">
+    <div class="container claim-inner">
+      <div class="claim-copy">
+        <h2 class="display claim-title">Ready to sponsor?</h2>
+        <p class="lede">
+          Tell us which tier you're interested in and we'll follow up within 24 hours.
+        </p>
+      </div>
+      <form class="claim-form" name="sponsor-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="sponsor-inquiry" />
+        <p class="hp"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <div class="row">
+          <div class="field"><label for="s-name">Name</label><input id="s-name" name="name" type="text" autocomplete="name" required /></div>
+          <div class="field"><label for="s-org">Organization</label><input id="s-org" name="organization" type="text" autocomplete="organization" required /></div>
+        </div>
+        <div class="field">
+          <label for="s-tier">Tier interest</label>
+          <select id="s-tier" name="tier" required>
+            <option value="" disabled selected>Choose a tier…</option>
+            {tiers.map((t) => <option value={t.data.tier}>{t.data.tier} - ${t.data.price.toLocaleString('en-US')}</option>)}
+            <option value="Undecided">Not sure yet</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="field"><label for="s-phone">Phone</label><input id="s-phone" name="phone" type="tel" autocomplete="tel" /></div>
+          <div class="field"><label for="s-email">Email</label><input id="s-email" name="email" type="email" autocomplete="email" required /></div>
+        </div>
+        <div class="field">
+          <label for="s-msg">Message <span class="optional">(optional)</span></label>
+          <textarea id="s-msg" name="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn--cream claim-submit">Send Inquiry</button>
+        <p class="claim-note">We'll reach out within 24 hours · {event.contactEmail}</p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .why-sponsor { display: grid; gap: var(--space-m); }
+  .section-title { font-size: var(--step-4); }
+  .section-title.center { text-align: center; }
+  .center-label { text-align: center; margin-bottom: var(--space-xl); }
+  .band-cream { background: var(--cream-warm); }
+
+  .tier-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: stretch; }
+  /* Presenting spans full width on top on wide screens for dominance */
+  @media (min-width: 980px) {
+    .tier-grid { grid-template-columns: repeat(3, 1fr); }
+    .tier-cell.is-featured { grid-column: 1 / -1; }
+    .tier-cell.is-featured :global(.tier-card) { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: var(--space-l); }
+  }
+  .tier-cell { display: grid; gap: var(--space-s); }
+  .tier-desc { font-size: var(--step--1); color: var(--hf-moss); padding-inline: var(--space-xs); }
+  .tier-desc :global(em) { color: var(--hf-rust); font-style: italic; }
+
+  .benefits-sub { text-align: center; color: var(--hf-moss); margin: var(--space-xs) 0 var(--space-xl); }
+
+  /* Artist dinner callout - cream card with tomato left border, Kepler italic heading */
+  .dinner-callout {
+    display: grid; gap: var(--space-l); align-items: center;
+    background: var(--cream-warm);
+    border-left: 6px solid var(--hf-tomato);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow);
+  }
+  @media (min-width: 760px) { .dinner-callout { grid-template-columns: 1.6fr 1fr; } }
+  .dinner-copy { display: grid; gap: var(--space-m); justify-items: start; }
+  .dinner-title { font-size: var(--step-3); }
+  .dinner-callout :global(.dinner-mark) { width: min(220px, 70%); color: var(--hf-tomato); justify-self: center; }
+
+  /* Claim form */
+  .band-rust { background: var(--hf-rust); color: var(--cream-warm); }
+  .claim-inner { display: grid; gap: var(--space-xl); align-items: start; }
+  @media (min-width: 880px) { .claim-inner { grid-template-columns: 0.9fr 1.3fr; } }
+  .claim-title { font-size: var(--step-4); color: var(--cream-warm); }
+  .claim-copy .lede { color: color-mix(in srgb, var(--cream-warm) 90%, transparent); margin-top: var(--space-m); }
+
+  .claim-form { display: grid; gap: var(--space-m); background: var(--cream-warm); color: var(--hf-soot); padding: var(--space-l); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+  .row { display: grid; gap: var(--space-m); }
+  @media (min-width: 520px) { .row { grid-template-columns: 1fr 1fr; } }
+  .field { display: grid; gap: 0.35rem; }
+  .field label { font-family: var(--font-head); font-weight: 600; font-size: var(--step--1); }
+  .optional { color: var(--hf-moss); font-weight: 400; }
+  .field input, .field select, .field textarea {
+    padding: 0.7rem 0.85rem; border-radius: 10px; background: #fff;
+    border: 1.5px solid color-mix(in srgb, var(--hf-soot) 22%, transparent);
+  }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+    outline: 3px solid var(--hf-tomato); outline-offset: 1px; border-color: var(--hf-tomato);
+  }
+  .claim-submit { justify-content: center; margin-top: var(--space-xs); }
+  .claim-note { text-align: center; font-size: var(--step--1); color: var(--hf-moss); }
+  .hp { position: absolute; left: -9999px; }
+</style>

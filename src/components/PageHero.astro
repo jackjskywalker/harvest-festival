@@ -1,0 +1,43 @@
+---
+/* Interior page hero. Variants:
+   - 'rust'   : dark Rust band, cream heading, scattered stars (Lineup, Sponsors, Dinner)
+   - 'tomato' : Tomato band, soot heading
+   - 'cream'  : quiet cream hero (Why It Matters) */
+import StarScatter from './StarScatter.astro';
+interface Props {
+  eyebrow?: string;
+  variant?: 'rust' | 'tomato' | 'cream';
+  stars?: boolean;
+  class?: string;
+}
+const { eyebrow, variant = 'rust', stars = true, class: className = '' } = Astro.props;
+---
+<section class={`page-hero ph-${variant} ${className}`}>
+  {stars && variant !== 'cream' && <StarScatter tone="var(--star-tone)" class="ph-stars" />}
+  <div class="container ph-inner">
+    {eyebrow && <p class="eyebrow ph-eyebrow">{eyebrow}</p>}
+    <h1 class="display ph-title"><slot /></h1>
+    <div class="ph-sub"><slot name="sub" /></div>
+    <div class="ph-actions"><slot name="actions" /></div>
+  </div>
+</section>
+
+<style>
+  .page-hero { position: relative; overflow: hidden; isolation: isolate; padding-block: var(--space-2xl); }
+  @media (min-width: 768px) { .page-hero { padding-block: var(--space-3xl) var(--space-2xl); } }
+
+  .ph-rust   { background: var(--hf-rust);   color: var(--cream-warm); --star-tone: var(--rust-deep); }
+  .ph-tomato { background: var(--hf-tomato); color: var(--cream-warm); --star-tone: var(--tomato-deep); }
+  .ph-cream  { background: var(--hf-cream);  color: var(--hf-soot); }
+
+  .ph-stars { z-index: -1; opacity: 0.9; }
+
+  .ph-inner { position: relative; display: grid; gap: var(--space-m); max-width: 52rem; }
+  .ph-eyebrow { color: var(--hf-clear-skies); }
+  .ph-cream .ph-eyebrow { color: var(--hf-moss); }
+  .ph-title { font-size: var(--step-5); }
+  .ph-rust .ph-title, .ph-tomato .ph-title { color: var(--cream-warm); }
+  .ph-sub:empty, .ph-actions:empty { display: none; }
+  .ph-sub { font-size: var(--step-1); color: color-mix(in srgb, currentColor 88%, transparent); max-width: 46ch; }
+  .ph-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-xs); }
+</style>

@@ -1,0 +1,33 @@
+---
+/* Decorative scattered stars - race-day energy texture for hero/dark bands.
+   Purely decorative; positioned absolutely behind content. */
+import Star from './Star.astro';
+interface Props { class?: string; tone?: string; }
+const { class: className = '', tone = 'currentColor' } = Astro.props;
+
+// Hand-placed constellation: {top%, left%, size, opacity}
+const stars = [
+  { t: 8,  l: 6,  s: 26, o: 0.9 },
+  { t: 20, l: 88, s: 34, o: 0.8 },
+  { t: 42, l: 14, s: 18, o: 0.7 },
+  { t: 66, l: 80, s: 22, o: 0.85 },
+  { t: 78, l: 30, s: 30, o: 0.7 },
+  { t: 14, l: 50, s: 14, o: 0.6 },
+  { t: 54, l: 60, s: 16, o: 0.55 },
+  { t: 88, l: 66, s: 20, o: 0.6 },
+];
+---
+<div class={`star-scatter ${className}`} style={`color:${tone}`} aria-hidden="true">
+  {stars.map((st) => (
+    <Star size={st.s} style={`position:absolute;top:${st.t}%;left:${st.l}%;opacity:${st.o}`} />
+  ))}
+</div>
+
+<style>
+  .star-scatter {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>

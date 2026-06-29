@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatBlock from '../components/StatBlock.astro';
+import BrandMark from '../components/BrandMark.astro';
+import { event, org, stats } from '../data/site';
+---
+<BaseLayout
+  title="Why It Matters - Harvest Festival"
+  description="Every ticket to the Harvest Festival funds free sports camps for kids who can't afford them. The mission behind the music - a ministry of Reap the Harvest Foundation."
+>
+  <!-- Hero - quiet cream, script + verse -->
+  <section class="verse-hero">
+    <div class="container-narrow verse-inner">
+      <BrandMark name="cross-of-stars" decorative class="verse-cross" />
+      <h1 class="script verse-script">The harvest is plentiful.</h1>
+      <blockquote class="verse-quote">
+        {event.verse}
+        <cite>- {event.verseRef}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Mission behind the music -->
+  <section class="section">
+    <div class="container-narrow mission">
+      <h2 class="display mission-title">Every ticket funds a free camp.</h2>
+      <p class="lede">
+        Reap the Harvest Foundation runs free football and sports camps for kids across
+        Virginia, Louisiana, Tennessee, and Minnesota - kids who could never afford to play
+        otherwise. The Harvest Festival is the annual event that makes those camps possible.
+        When you buy a ticket or sponsor a stage, you're putting a kid on a field and giving
+        them a chance to hear the Gospel.
+      </p>
+    </div>
+  </section>
+
+  <!-- By the numbers -->
+  <section class="section band-rust on-dark">
+    <BrandMark name="harvey-running" decorative class="numbers-horse" />
+    <div class="container numbers-inner">
+      <h2 class="display numbers-title">By the numbers.</h2>
+      <div class="stat-grid">
+        {stats.map((s) => <StatBlock value={s.value} label={s.label} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- About RTH -->
+  <section class="section">
+    <div class="container-narrow about">
+      <h2 class="display about-title">About Reap the Harvest Foundation.</h2>
+      <p class="lede">
+        {org.name} is a registered {org.status} (EIN {org.ein}) based in {org.base}. Founded in
+        2024, RTH runs free sports camps, community worship nights, and street outreach - all
+        with the mission to reach the next generation with the Gospel of Jesus Christ.
+      </p>
+      <a href={org.url} target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+        Visit reaptheharvestfoundation.com&nbsp;↗
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .verse-hero { background: var(--hf-cream); padding-block: var(--space-3xl); }
+  .verse-inner { display: grid; gap: var(--space-l); justify-items: center; text-align: center; }
+  .verse-inner :global(.verse-cross) { width: 48px; color: var(--hf-tomato); }
+  .verse-script { font-size: var(--step-5); color: var(--hf-rust); }
+  .verse-quote {
+    font-family: var(--font-head);
+    font-style: italic;
+    font-size: var(--step-2);
+    color: var(--hf-soot);
+    max-width: 24ch;
+    line-height: 1.3;
+  }
+  .verse-quote cite { display: block; font-style: normal; font-size: var(--step-0); color: var(--hf-moss); margin-top: var(--space-s); }
+
+  .mission { display: grid; gap: var(--space-m); text-align: center; justify-items: center; }
+  .mission-title { font-size: var(--step-4); }
+
+  .band-rust { position: relative; overflow: hidden; isolation: isolate; background: var(--hf-rust); color: var(--cream-warm); }
+  .band-rust :global(.numbers-horse) {
+    position: absolute; left: -5%; bottom: -12%; width: min(520px, 55%);
+    color: var(--rust-deep); opacity: 0.5; z-index: -1;
+  }
+  .numbers-inner { position: relative; display: grid; gap: var(--space-xl); }
+  .numbers-title { font-size: var(--step-4); color: var(--cream-warm); text-align: center; }
+  .stat-grid {
+    display: grid;
+    gap: var(--space-xl) var(--space-l);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 760px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+  /* stat values are tomato by default; on rust use clear-skies for contrast */
+  .band-rust :global(.stat-value) { color: var(--hf-clear-skies); }
+  .band-rust :global(.stat-label) { color: color-mix(in srgb, var(--cream-warm) 86%, transparent); }
+
+  .about { display: grid; gap: var(--space-m); text-align: center; justify-items: center; }
+  .about-title { font-size: var(--step-3); }
+</style>

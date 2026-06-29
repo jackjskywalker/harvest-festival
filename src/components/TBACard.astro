@@ -1,0 +1,34 @@
+---
+/* "To Be Announced" slot - used when an artist/headliner isn't public yet.
+   Always better than inventing a name. Signals more is coming. */
+import BrandMark from './BrandMark.astro';
+interface Props { role?: string; label?: string; note?: string; }
+const { role = 'More Artists', label = 'To Be Announced', note } = Astro.props;
+---
+<article class="tba-card">
+  <BrandMark name="hf-stars" decorative class="tba-mark" />
+  <p class="eyebrow">{role}</p>
+  <p class="display tba-title">{label}</p>
+  {note && <p class="tba-note">{note}</p>}
+</article>
+
+<style>
+  .tba-card {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-xs);
+    padding: var(--space-xl) var(--space-m);
+    border-radius: var(--radius-lg);
+    border: 1.5px dashed color-mix(in srgb, var(--hf-moss) 55%, transparent);
+    background: color-mix(in srgb, var(--hf-moss) 9%, var(--hf-cream));
+  }
+  .tba-card :global(.tba-mark) {
+    width: 84px;
+    color: var(--hf-moss);
+    opacity: 0.85;
+    margin-bottom: var(--space-xs);
+  }
+  .tba-title { font-size: var(--step-2); color: var(--hf-rust); }
+  .tba-note { font-size: var(--step--1); color: var(--hf-moss); max-width: 28ch; }
+</style>

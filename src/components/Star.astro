@@ -1,0 +1,17 @@
+---
+/* A single solid 5-point star - the brand's decorative texture mark.
+   Uses currentColor so it can be tinted to any palette value. */
+interface Props { size?: number | string; class?: string; style?: string; }
+const { size = 24, class: className = '', style = '' } = Astro.props;
+const s = typeof size === 'number' ? `${size}px` : size;
+---
+<svg
+  class={`hf-star ${className}`}
+  width={s} height={s}
+  viewBox="0 0 24 24"
+  style={style}
+  fill="currentColor"
+  role="presentation" aria-hidden="true"
+>
+  <path d="M12 1.6l2.7 6.9 7.4.4-5.7 4.7 1.9 7.2L12 17.6 5.7 21.8l1.9-7.2L1.9 8.9l7.4-.4z" />
+</svg>

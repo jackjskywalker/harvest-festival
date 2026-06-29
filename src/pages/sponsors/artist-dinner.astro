@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import BrandMark from '../../components/BrandMark.astro';
+---
+<BaseLayout
+  title="The Artist Dinner - Harvest Festival"
+  description="An exclusive evening with the headlining artists and RTH leadership the night before the Harvest Festival. By invitation only, for Presenting and Stage Sponsors."
+>
+  <PageHero eyebrow="By invitation only" variant="rust">
+    An evening with the artists.
+    <Fragment slot="sub">By invitation only · Presenting and Stage Sponsors</Fragment>
+  </PageHero>
+
+  <!-- What it is -->
+  <section class="section">
+    <div class="container dinner-grid">
+      <div class="dinner-copy">
+        <p class="lede">
+          The night before the Harvest Festival, our top sponsors gather for an exclusive
+          dinner with the headlining artists and RTH leadership. It is an intimate, unhurried
+          evening - a chance to hear from the artists personally, connect with the ministry,
+          and celebrate what God is doing through the Harvest Festival.
+        </p>
+
+        <dl class="dinner-facts">
+          <div><dt>Date</dt><dd>Evening of October 23, 2026 <span class="tbd">to be confirmed</span></dd></div>
+          <div><dt>Location</dt><dd>Venue <span class="tbd">to be announced</span></dd></div>
+          <div><dt>Guests</dt><dd>Presenting Sponsor + Stage Sponsors and their invited guests</dd></div>
+        </dl>
+      </div>
+
+      <aside class="dinner-aside" aria-hidden="true">
+        <BrandMark name="hf-script-ring" decorative class="aside-mark" />
+      </aside>
+    </div>
+  </section>
+
+  <!-- Access -->
+  <section class="section band-rust on-dark">
+    <div class="container-narrow access-inner">
+      <BrandMark name="cross-of-stars" decorative class="access-cross" />
+      <h2 class="display access-title">How to receive an invitation.</h2>
+      <p class="lede">
+        The Artist Dinner is exclusively available to Presenting Sponsors ($50,000) and Stage
+        Sponsors ($25,000). Claim your sponsorship and your invitation follows.
+      </p>
+      <a href="/sponsors#claim" class="btn btn--cream">Claim a Sponsorship →</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dinner-grid { display: grid; gap: var(--space-xl); align-items: center; }
+  @media (min-width: 860px) { .dinner-grid { grid-template-columns: 1.5fr 1fr; } }
+  .dinner-copy { display: grid; gap: var(--space-l); }
+
+  .dinner-facts { display: grid; gap: var(--space-m); }
+  .dinner-facts > div { display: grid; gap: 0.2rem; padding-bottom: var(--space-m); border-bottom: var(--border); }
+  .dinner-facts dt { font-family: var(--font-body); font-size: var(--step--1); letter-spacing: 0.16em; text-transform: uppercase; color: var(--hf-moss); }
+  .dinner-facts dd { font-family: var(--font-head); font-weight: 600; font-size: var(--step-1); }
+  .tbd { font-family: var(--font-body); font-weight: 400; font-size: var(--step--1); color: var(--hf-tomato); margin-left: 0.4rem; }
+
+  .dinner-aside { display: grid; place-items: center; }
+  .dinner-aside :global(.aside-mark) { width: min(280px, 80%); color: var(--hf-tomato); opacity: 0.9; }
+
+  .band-rust { background: var(--hf-rust); color: var(--cream-warm); }
+  .access-inner { display: grid; gap: var(--space-m); justify-items: center; text-align: center; }
+  .access-inner :global(.access-cross) { width: 40px; color: var(--hf-clear-skies); margin-bottom: var(--space-xs); }
+  .access-title { font-size: var(--step-4); color: var(--cream-warm); }
+  .access-inner .lede { color: color-mix(in srgb, var(--cream-warm) 90%, transparent); max-width: 50ch; }
+</style>

@@ -1,0 +1,81 @@
+---
+/* Ticket tier card. When `price` is null → renders a clear "TBD" state.
+   Never invents the $25 mockup price. */
+interface Props {
+  name: string;
+  price?: string | null;
+  unit?: string | null;
+  features?: string[];
+  note?: string | null;
+  featured?: boolean;
+}
+const { name, price = null, unit = null, features = [], note = null, featured = false } = Astro.props;
+---
+<article class:list={['ticket-tier', { featured }]}>
+  {featured && <span class="ticket-flag">Most popular</span>}
+  <h3 class="display ticket-name">{name}</h3>
+
+  <p class="ticket-price">
+    {price
+      ? <><span class="amount">{price}</span>{unit && <span class="unit"> {unit}</span>}</>
+      : <span class="tbd-price">Price - TBD</span>}
+  </p>
+
+  {features.length > 0 && (
+    <ul class="ticket-features">
+      {features.map((f) => <li>{f}</li>)}
+    </ul>
+  )}
+  {note && <p class="ticket-note">{note}</p>}
+
+  <a
+    href="/tickets#buy"
+    class:list={['btn', featured ? 'btn--primary' : 'btn--ghost', 'ticket-cta']}
+    aria-disabled={price ? undefined : 'true'}
+  >
+    {price ? 'Buy Tickets' : 'Notify Me'}
+  </a>
+</article>
+
+<style>
+  .ticket-tier {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    padding: var(--space-l);
+    border-radius: var(--radius-lg);
+    background: var(--cream-warm);
+    border: var(--border);
+    height: 100%;
+  }
+  .ticket-tier.featured {
+    border-color: color-mix(in srgb, var(--hf-tomato) 60%, transparent);
+    box-shadow: var(--shadow);
+  }
+  .ticket-flag {
+    position: absolute; top: -0.75rem; left: var(--space-l);
+    background: var(--hf-tomato); color: var(--cream-warm);
+    font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 999px;
+  }
+  .ticket-name { font-size: var(--step-2); }
+  .ticket-price { min-height: 2.2rem; }
+  .amount { font-family: var(--font-head); font-weight: 700; font-size: var(--step-3); }
+  .unit { font-size: var(--step-0); color: var(--hf-moss); }
+  .tbd-price {
+    display: inline-block;
+    font-family: var(--font-head); font-weight: 600; font-size: var(--step-1);
+    color: var(--hf-moss);
+    border: 1.5px dashed color-mix(in srgb, var(--hf-moss) 50%, transparent);
+    border-radius: 999px; padding: 0.15rem 0.8rem;
+  }
+  .ticket-features { list-style: none; display: grid; gap: 0.5rem; margin-top: var(--space-xs); }
+  .ticket-features li { padding-left: 1.5rem; position: relative; }
+  .ticket-features li::before {
+    content: '✓'; position: absolute; left: 0; color: var(--hf-tomato); font-weight: 700;
+  }
+  .ticket-note { font-size: var(--step--1); color: var(--hf-moss); }
+  .ticket-cta { margin-top: auto; justify-content: center; }
+  .ticket-cta[aria-disabled='true'] { opacity: 0.85; }
+</style>

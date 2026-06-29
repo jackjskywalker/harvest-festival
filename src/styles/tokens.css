@@ -1,0 +1,71 @@
+/* ============================================================
+   Harvest Festival - Design Tokens
+   The single source of truth for color, type, spacing, and motion.
+   Every value below is traceable to the official brand guide (.ai).
+   NEVER hard-code a hex value in a component - reference these vars.
+   To swap to licensed fonts, change the --font-* values here only.
+   ============================================================ */
+
+:root {
+  /* ---- Core palette (exact, from brand guide "Color Palette") ---- */
+  --hf-cream:        #F8EFD2;   /* DEFAULT background - never pure white */
+  --hf-tomato:       #B23B24;   /* PRIMARY - buttons, hero bands, CTAs */
+  --hf-rust:         #47241D;   /* DARK anchor - deep sections, footer */
+  --hf-clear-skies:  #BCD0D3;   /* Accent - sky/air moments, sparingly */
+  --hf-moss:         #827852;   /* Earthy accent - labels, dividers */
+  --hf-soot:         #231F20;   /* Body text, near-black */
+
+  /* ---- Web-extended tints (for hover/depth - derived, on-brand) ---- */
+  --tomato-deep:     #8E2D1A;   /* Hover / pressed on tomato */
+  --tomato-soft:     #D4614A;   /* Lighter tomato, secondary elements */
+  --rust-deep:       #2F1410;   /* Deeper dark sections */
+  --cream-warm:      #FDF6E3;   /* Lightest surface */
+
+  /* ---- Semantic roles ---- */
+  --color-bg:        var(--hf-cream);
+  --color-text:      var(--hf-soot);
+  --color-primary:   var(--hf-tomato);
+
+  /* ---- Typography ----
+     Brand fonts (licensed, not on Google Fonts):
+       Display / wordmark : Kepler Std SemiCondensed Italic
+       Subheading         : Noto Serif ExtraCondensed SemiBold
+       Body               : Neue Haas Grotesk Display Pro 35 ExtraLight
+       Decorative         : Luxurious Script / Sloop Script Pro
+     Web substitutes loaded via Google Fonts below.            */
+  --font-display: 'Playfair Display', 'Noto Serif', serif;   /* Kepler substitute */
+  --font-head:    'Noto Serif', Georgia, serif;              /* direct match */
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif; /* Neue Haas substitute */
+  --font-script:  'Pinyon Script', 'Playfair Display', cursive;  /* Luxurious Script substitute */
+
+  /* ---- Fluid type scale (mobile-first, clamps up to desktop) ---- */
+  --step--1: clamp(0.83rem, 0.78rem + 0.25vw, 0.95rem);
+  --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.13rem);
+  --step-1:  clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --step-2:  clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+  --step-3:  clamp(1.9rem, 1.5rem + 2vw, 3rem);
+  --step-4:  clamp(2.4rem, 1.7rem + 3.5vw, 4.2rem);
+  --step-5:  clamp(3rem, 1.9rem + 5.5vw, 6rem);
+
+  /* ---- Spacing scale ---- */
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-s:   0.75rem;
+  --space-m:   1.25rem;
+  --space-l:   2rem;
+  --space-xl:  3.25rem;
+  --space-2xl: 5rem;
+  --space-3xl: 7.5rem;
+
+  /* ---- Layout ---- */
+  --container:      72rem;   /* 1152px max content width */
+  --container-narrow: 48rem;
+  --radius:    14px;
+  --radius-lg: 22px;
+  --border:    1.5px solid color-mix(in srgb, var(--hf-soot) 14%, transparent);
+
+  /* ---- Elevation & motion ---- */
+  --shadow:    0 14px 40px -22px color-mix(in srgb, var(--hf-rust) 70%, transparent);
+  --shadow-lg: 0 30px 70px -30px color-mix(in srgb, var(--rust-deep) 80%, transparent);
+  --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+}

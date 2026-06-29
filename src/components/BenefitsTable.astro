@@ -1,0 +1,72 @@
+---
+import { sponsorBenefits } from '../data/site';
+const { tiers, prices, rows } = sponsorBenefits;
+---
+<div class="table-wrap" role="region" aria-label="Sponsor benefits comparison" tabindex="0">
+  <table class="benefits">
+    <caption class="visually-hidden">Comparison of benefits across the four sponsorship tiers</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="benefit-col">Benefit</th>
+        {tiers.map((t, i) => (
+          <th scope="col" class:list={['tier-th', { featured: i === 0 }]}>
+            <span class="th-tier">{t}</span>
+            <span class="th-price">{prices[i]}</span>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row) => (
+        <tr>
+          <th scope="row" class="benefit-col">{row.label}</th>
+          {row.has.map((cell, i) => (
+            <td class:list={['cell', { featured: i === 0 }]}>
+              {cell === true && <span class="yes" aria-label="Included">✓</span>}
+              {cell === false && <span class="no" aria-label="Not included">-</span>}
+              {typeof cell === 'string' && <span class="tbd" aria-label={cell}>{cell}</span>}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .table-wrap { overflow-x: auto; border-radius: var(--radius-lg); border: var(--border); }
+  .table-wrap:focus-visible { outline: 3px solid var(--hf-tomato); outline-offset: 2px; }
+  .benefits {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+    background: var(--cream-warm);
+    font-size: var(--step-0);
+  }
+  .benefits th, .benefits td { padding: 0.85rem 1rem; text-align: center; }
+  .benefit-col { text-align: left; font-family: var(--font-head); font-weight: 600; }
+  thead .benefit-col { color: var(--hf-moss); }
+  tbody .benefit-col { font-weight: 500; }
+
+  .tier-th { vertical-align: bottom; }
+  .th-tier { display: block; font-family: var(--font-head); font-weight: 700; font-size: var(--step-0); }
+  .th-price { display: block; font-size: var(--step--1); color: var(--hf-moss); }
+
+  thead tr { border-bottom: 2px solid color-mix(in srgb, var(--hf-soot) 16%, transparent); }
+  tbody tr + tr { border-top: 1px solid color-mix(in srgb, var(--hf-soot) 10%, transparent); }
+
+  .tier-th.featured, .cell.featured {
+    background: color-mix(in srgb, var(--hf-tomato) 12%, transparent);
+  }
+  .tier-th.featured .th-price { color: var(--tomato-deep); }
+
+  .yes { color: var(--hf-tomato); font-weight: 700; }
+  .no { color: color-mix(in srgb, var(--hf-soot) 40%, transparent); }
+  .tbd {
+    font-size: var(--step--1);
+    color: var(--hf-moss);
+    border: 1px solid color-mix(in srgb, var(--hf-moss) 40%, transparent);
+    border-radius: 999px;
+    padding: 0.1rem 0.5rem;
+  }
+</style>

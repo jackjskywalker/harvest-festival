@@ -1,0 +1,149 @@
+---
+import { org, event } from '../data/site';
+import BrandMark from './BrandMark.astro';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'Festival',
+    links: [
+      { label: 'Lineup', href: '/lineup' },
+      { label: 'Tickets', href: '/tickets' },
+      { label: 'Venue + Info', href: '/venue' },
+      { label: 'Schedule', href: '/schedule' },
+      { label: 'FAQ', href: '/faq' },
+    ],
+  },
+  {
+    title: 'Sponsors',
+    links: [
+      { label: 'Tiers', href: '/sponsors' },
+      { label: 'Artist Dinner', href: '/sponsors/artist-dinner' },
+      { label: 'Current Sponsors', href: '/sponsors/current' },
+    ],
+  },
+  {
+    title: 'Get Involved',
+    links: [
+      { label: 'Volunteer', href: '/volunteer' },
+      { label: 'Press + Media', href: '/press' },
+    ],
+  },
+  {
+    title: 'Mission',
+    links: [
+      { label: 'Why It Matters', href: '/why-it-matters' },
+      { label: 'About RTH ↗', href: org.url, external: true },
+    ],
+  },
+];
+---
+<footer class="site-footer on-dark">
+  <div class="container footer-top">
+    <div class="footer-brand">
+      <BrandMark name="wordmark-stacked" title="Harvest Festival" class="footer-mark" />
+      <p class="footer-tagline script">{event.tagline}</p>
+      <BrandMark name="cross-of-stars" decorative class="footer-cross" />
+    </div>
+
+    <nav class="footer-cols" aria-label="Footer">
+      {columns.map((col) => (
+        <div class="footer-col">
+          <h2 class="footer-col-title">{col.title}</h2>
+          <ul>
+            {col.links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+
+  <div class="container footer-bottom">
+    <p class="legal">
+      The Harvest Festival is a ministry event of {org.name} - a registered
+      {org.status} (EIN {org.ein}) · {org.base}
+    </p>
+    <p class="verse">
+      <span class="script">{event.verse}</span> <span class="verse-ref">- {event.verseRef}</span>
+    </p>
+    <p class="copyright">© {year} {org.name}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--hf-rust);
+    color: var(--cream-warm);
+    margin-top: auto;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+  @media (min-width: 860px) {
+    .footer-top { grid-template-columns: 0.9fr 2fr; }
+  }
+  .footer-brand :global(.footer-mark) {
+    width: clamp(150px, 30vw, 200px);
+    color: var(--cream-warm);
+  }
+  .footer-tagline {
+    font-size: var(--step-2);
+    color: var(--hf-clear-skies);
+    margin-top: var(--space-s);
+  }
+  .footer-brand :global(.footer-cross) {
+    width: 30px;
+    color: color-mix(in srgb, var(--cream-warm) 60%, transparent);
+    margin-top: var(--space-m);
+  }
+
+  .footer-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+  @media (min-width: 560px) { .footer-cols { grid-template-columns: repeat(4, 1fr); } }
+
+  .footer-col-title {
+    font-family: var(--font-head);
+    font-size: var(--step-0);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--tomato-soft);
+    margin-bottom: var(--space-s);
+  }
+  .footer-col ul { list-style: none; display: grid; gap: 0.55rem; }
+  .footer-col a {
+    color: color-mix(in srgb, var(--cream-warm) 86%, transparent);
+    text-decoration: none;
+    font-size: var(--step-0);
+  }
+  .footer-col a:hover { color: var(--cream-warm); text-decoration: underline; }
+
+  .footer-bottom {
+    border-top: 1px solid color-mix(in srgb, var(--cream-warm) 18%, transparent);
+    padding-block: var(--space-l) var(--space-2xl);
+    display: grid;
+    gap: var(--space-xs);
+  }
+  .legal {
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--cream-warm) 78%, transparent);
+    max-width: 60ch;
+  }
+  .verse { font-size: var(--step-1); margin-top: var(--space-xs); }
+  .verse .script { color: var(--hf-clear-skies); }
+  .verse-ref { font-size: var(--step--1); color: color-mix(in srgb, var(--cream-warm) 65%, transparent); }
+  .copyright { font-size: var(--step--1); color: color-mix(in srgb, var(--cream-warm) 55%, transparent); margin-top: var(--space-xs); }
+</style>

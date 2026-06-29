@@ -1,0 +1,120 @@
+---
+/*
+  HeroFestival - the festival's signature aesthetic, faithful to page 8 of the
+  brand guide (the ticket mockup):
+    · Full-bleed Tomato background
+    · Harvey the Horse (rearing) at large scale, rust-tinted silhouette
+    · Soot "Harvest Festival" wordmark (the real extracted Kepler mark)
+    · Faded rust stars scattered behind the horse
+    · Script eyebrow "The Harvest is Plentiful"
+*/
+import { event } from '../data/site';
+import BrandMark from './BrandMark.astro';
+import Star from './Star.astro';
+---
+<section class="hero" aria-labelledby="hero-title">
+  <!-- faded rust stars, behind everything (matches mockup) -->
+  <div class="hero-stars" aria-hidden="true">
+    <Star size={64} style="top:24%;left:38%" />
+    <Star size={44} style="top:16%;left:30%" />
+    <Star size={40} style="top:38%;left:28%" />
+    <Star size={52} style="top:54%;left:34%" />
+    <Star size={34} style="top:62%;left:44%" />
+    <Star size={30} style="top:10%;left:46%" />
+  </div>
+
+  <div class="container hero-inner">
+    <BrandMark name="wordmark-horizontal" title="Harvest Festival" class="hero-wordmark" />
+    <p id="hero-title" class="visually-hidden">Harvest Festival</p>
+
+    <p class="hero-eyebrow script">{event.tagline}</p>
+
+    <!-- Harvey rearing - the centerpiece -->
+    <BrandMark name="harvey-rearing" decorative class="hero-horse" />
+
+    <div class="hero-meta">
+      <p class="hero-dateline">
+        {event.date} <span class="dot">·</span> {event.venue} <span class="dot">·</span> {event.city}
+      </p>
+      <p class="hero-subline">A day of worship, music, and the Gospel - for the whole family.</p>
+      <p class="hero-attendance">{event.attendance} expected</p>
+
+      <div class="hero-cta">
+        <a href="/tickets" class="btn btn--cream">Get Tickets</a>
+        <a href="/sponsors" class="btn btn--ghost-light">Become a Sponsor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    background: var(--hf-tomato);
+    color: var(--cream-warm);
+    overflow: hidden;
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3rem, 7vw, 6rem);
+  }
+  /* subtle deepening toward edges, keeps the flat-poster feel */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(125% 100% at 50% 28%,
+                transparent 68%,
+                color-mix(in srgb, var(--tomato-deep) 32%, transparent) 100%);
+  }
+
+  .hero-stars { position: absolute; inset: 0; z-index: -1; color: var(--tomato-deep); }
+  .hero-stars :global(.hf-star) { position: absolute; opacity: 0.55; }
+
+  .hero-inner {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-m);
+  }
+
+  /* Wordmark in soot (#231F20) - exactly as the ticket mockup */
+  .hero-inner :global(.hero-wordmark) {
+    width: min(760px, 92%);
+    color: var(--hf-soot);
+  }
+
+  .hero-eyebrow {
+    font-size: var(--step-3);
+    color: var(--hf-soot);
+    margin-top: calc(var(--space-s) * -1);
+  }
+
+  /* Rust-tinted Harvey, overlapping the meta block slightly like the poster */
+  .hero-inner :global(.hero-horse) {
+    width: min(440px, 76%);
+    color: var(--rust-deep);
+    filter: drop-shadow(0 18px 30px color-mix(in srgb, var(--rust-deep) 45%, transparent));
+    margin-block: var(--space-xs) var(--space-s);
+  }
+
+  .hero-meta { display: grid; gap: var(--space-s); justify-items: center; max-width: 44ch; }
+  .hero-dateline {
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: var(--step-1);
+    letter-spacing: 0.01em;
+  }
+  .dot { color: color-mix(in srgb, var(--cream-warm) 60%, transparent); padding-inline: 0.25em; }
+  .hero-subline { font-size: var(--step-1); color: color-mix(in srgb, var(--cream-warm) 92%, transparent); }
+  .hero-attendance {
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--hf-clear-skies);
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: var(--space-s); justify-content: center; margin-top: var(--space-xs); }
+
+  @media (min-width: 768px) {
+    .hero-eyebrow { font-size: var(--step-4); }
+  }
+</style>

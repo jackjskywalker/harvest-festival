@@ -1,0 +1,21 @@
+---
+/* Eyebrow + display heading pairing used across pages. */
+interface Props {
+  eyebrow?: string;
+  align?: 'left' | 'center';
+  as?: 'h2' | 'h3';
+  class?: string;
+}
+const { eyebrow, align = 'left', as: Tag = 'h2', class: className = '' } = Astro.props;
+---
+<header class={`section-heading align-${align} ${className}`}>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Tag class="display section-heading-title"><slot /></Tag>
+  <slot name="sub" />
+</header>
+
+<style>
+  .section-heading { display: grid; gap: var(--space-s); }
+  .align-center { justify-items: center; text-align: center; }
+  .section-heading-title { font-size: var(--step-4); }
+</style>
