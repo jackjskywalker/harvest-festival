@@ -5,7 +5,7 @@ import { defineConfig } from 'astro/config';
 // Production target: festival.reaptheharvestfoundation.com (add CNAME in repo settings)
 export default defineConfig({
   site: 'https://jackjskywalker.github.io',
-  base: '/harvest-festival-website',
+  base: '/harvest-festival',
   output: 'static',
   trailingSlash: 'ignore',
   build: {
