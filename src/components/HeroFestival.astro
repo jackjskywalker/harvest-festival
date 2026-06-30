@@ -11,6 +11,7 @@
 import { event } from '../data/site';
 import BrandMark from './BrandMark.astro';
 import Star from './Star.astro';
+import { u } from '../utils/url';
 ---
 <section class="hero" aria-labelledby="hero-title">
   <!-- faded rust stars, behind everything (matches mockup) -->
@@ -40,8 +41,8 @@ import Star from './Star.astro';
       <p class="hero-attendance">{event.attendance} expected</p>
 
       <div class="hero-cta">
-        <a href="/tickets" class="btn btn--cream">Get Tickets</a>
-        <a href="/sponsors" class="btn btn--ghost-light">Become a Sponsor</a>
+        <a href={u('/tickets')} class="btn btn--cream">Get Tickets</a>
+        <a href={u('/sponsors')} class="btn btn--ghost-light">Become a Sponsor</a>
       </div>
     </div>
   </div>

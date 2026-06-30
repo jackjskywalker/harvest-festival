@@ -5,6 +5,7 @@ import PageHero from '../components/PageHero.astro';
 import ArtistCard from '../components/ArtistCard.astro';
 import TBACard from '../components/TBACard.astro';
 import { event } from '../data/site';
+import { u } from '../utils/url';
 
 const all = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
 const headliner = all.find((a) => a.data.kind === 'headliner');
@@ -73,7 +74,7 @@ const speakerContent = await Promise.all(
       </div>
 
       <div class="lineup-cta">
-        <a href="/tickets" class="btn btn--primary">Get Tickets</a>
+        <a href={u("/tickets")} class="btn btn--primary">Get Tickets</a>
       </div>
     </div>
   </section>

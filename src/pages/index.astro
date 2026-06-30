@@ -7,6 +7,7 @@ import BrandMark from '../components/BrandMark.astro';
 import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import StarScatter from '../components/StarScatter.astro';
 import { event, org } from '../data/site';
+import { u } from '../utils/url';
 
 // Lineup tease - confirmed speakers + headliner TBA, sorted by order.
 const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
@@ -43,7 +44,7 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
       </ul>
 
       <div class="center-cta">
-        <a href="/lineup" class="btn btn--primary">See Full Lineup</a>
+        <a href={u("/lineup")} class="btn btn--primary">See Full Lineup</a>
       </div>
     </div>
   </section>
@@ -74,8 +75,8 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
         <p class="price-note">Pricing announced soon - be the first to know.</p>
       </div>
       <div class="band-cta-actions">
-        <a href="/tickets" class="btn btn--cream">Buy Tickets</a>
-        <a href="/tickets#group" class="btn btn--ghost-light">Group Inquiry</a>
+        <a href={u("/tickets")} class="btn btn--cream">Buy Tickets</a>
+        <a href={u("/tickets#group")} class="btn btn--ghost-light">Group Inquiry</a>
       </div>
     </div>
   </section>
@@ -93,7 +94,7 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
           thousands.
         </p>
         <p class="tier-preview">Presenting · Stage · Field · Banner</p>
-        <a href="/sponsors" class="btn btn--primary">View Sponsorship Tiers</a>
+        <a href={u("/sponsors")} class="btn btn--primary">View Sponsorship Tiers</a>
       </div>
       <div class="sponsor-deco" aria-hidden="true">
         <div class="checker"></div>
@@ -122,7 +123,7 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
           <li><span class="vd-label">Parking</span><span class="vd-value">Details soon</span></li>
           <li><span class="vd-label">Weather</span><span class="vd-value">Rain or shine</span></li>
         </ul>
-        <a href="/venue" class="btn btn--ghost">Venue + Info</a>
+        <a href={u("/venue")} class="btn btn--ghost">Venue + Info</a>
       </div>
     </div>
   </section>
@@ -138,7 +139,7 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
         on a field, hearing the Gospel for the first time.
       </p>
       <div class="why-actions">
-        <a href="/why-it-matters" class="btn btn--ghost">Why It Matters</a>
+        <a href={u("/why-it-matters")} class="btn btn--ghost">Why It Matters</a>
         <a href={org.url} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
           About RTH&nbsp;↗
         </a>

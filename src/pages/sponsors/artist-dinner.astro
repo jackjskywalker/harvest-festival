@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/PageHero.astro';
 import BrandMark from '../../components/BrandMark.astro';
+import { u } from '../../utils/url';
 ---
 <BaseLayout
   title="The Artist Dinner - Harvest Festival"
@@ -45,7 +46,7 @@ import BrandMark from '../../components/BrandMark.astro';
         The Artist Dinner is exclusively available to Presenting Sponsors ($50,000) and Stage
         Sponsors ($25,000). Claim your sponsorship and your invitation follows.
       </p>
-      <a href="/sponsors#claim" class="btn btn--cream">Claim a Sponsorship →</a>
+      <a href={u('/sponsors#claim')} class="btn btn--cream">Claim a Sponsorship →</a>
     </div>
   </section>
 </BaseLayout>

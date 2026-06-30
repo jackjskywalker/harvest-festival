@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BrandMark from '../components/BrandMark.astro';
+import { u } from '../utils/url';
 ---
 <BaseLayout title="Page not found - Harvest Festival" description="That page wandered off. Head back to the Harvest Festival home.">
   <section class="nf">
@@ -10,8 +11,8 @@ import BrandMark from '../components/BrandMark.astro';
       <h1 class="display nf-title">This one got away.</h1>
       <p class="lede">The page you're looking for has wandered off the field. Let's get you back.</p>
       <div class="nf-actions">
-        <a href="/" class="btn btn--primary">Back to Home</a>
-        <a href="/lineup" class="btn btn--ghost">See the Lineup</a>
+        <a href={u('/')} class="btn btn--primary">Back to Home</a>
+        <a href={u('/lineup')} class="btn btn--ghost">See the Lineup</a>
       </div>
     </div>
   </section>

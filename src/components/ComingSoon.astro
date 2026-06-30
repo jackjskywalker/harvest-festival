@@ -2,6 +2,7 @@
 /* Phase 2 placeholder. Keeps nav/footer links live (no 404s) while clearly
    signalling the page is on the way. Replace with the real page in Phase 2. */
 import BrandMark from './BrandMark.astro';
+import { u } from '../utils/url';
 interface Props { eyebrow: string; phaseNote?: string; }
 const { eyebrow, phaseNote = 'This page is coming soon.' } = Astro.props;
 ---
@@ -12,8 +13,8 @@ const { eyebrow, phaseNote = 'This page is coming soon.' } = Astro.props;
     <h1 class="display coming-title"><slot /></h1>
     <p class="coming-note">{phaseNote}</p>
     <div class="coming-actions">
-      <a href="/" class="btn btn--primary">Back to Home</a>
-      <a href="/tickets" class="btn btn--ghost">Get Tickets</a>
+      <a href={u('/')} class="btn btn--primary">Back to Home</a>
+      <a href={u('/tickets')} class="btn btn--ghost">Get Tickets</a>
     </div>
   </div>
 </section>

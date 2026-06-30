@@ -6,6 +6,7 @@ import SponsorTierCard from '../../components/SponsorTierCard.astro';
 import BenefitsTable from '../../components/BenefitsTable.astro';
 import BrandMark from '../../components/BrandMark.astro';
 import { event } from '../../data/site';
+import { u } from '../../utils/url';
 
 const tiers = (await getCollection('sponsors')).sort((a, b) => a.data.order - b.data.order);
 const tierContent = await Promise.all(
@@ -87,7 +88,7 @@ const tierContent = await Promise.all(
             Festival Artist Dinner - an intimate evening with the headlining artists and RTH
             leadership the night before the festival. Limited seats. This is not a public event.
           </p>
-          <a href="/sponsors/artist-dinner" class="btn btn--primary">Learn More →</a>
+          <a href={u('/sponsors/artist-dinner')} class="btn btn--primary">Learn More →</a>
         </div>
         <BrandMark name="hf-script-ring" decorative class="dinner-mark" />
       </aside>

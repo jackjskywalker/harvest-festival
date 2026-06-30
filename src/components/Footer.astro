@@ -1,6 +1,7 @@
 ---
 import { org, event } from '../data/site';
 import BrandMark from './BrandMark.astro';
+import { u } from '../utils/url';
 
 const year = new Date().getFullYear();
 
@@ -55,7 +56,7 @@ const columns = [
             {col.links.map((l) => (
               <li>
                 <a
-                  href={l.href}
+                  href={l.external ? l.href : u(l.href)}
                   {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >{l.label}</a>
               </li>

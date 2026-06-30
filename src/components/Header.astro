@@ -1,14 +1,16 @@
 ---
 import { nav } from '../data/site';
 import BrandMark from './BrandMark.astro';
+import { u } from '../utils/url';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '/';
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
 ---
 <header class="site-header">
   <div class="container header-inner">
-    <a href="/" class="brand" aria-label="Harvest Festival - home">
+    <a href={u('/')} class="brand" aria-label="Harvest Festival - home">
       <BrandMark name="wordmark-horizontal" title="Harvest Festival" class="brand-mark" />
     </a>
 
@@ -17,7 +19,7 @@ const isActive = (href: string) =>
         {nav.map((item) => (
           <li>
             <a
-              href={item.href}
+              href={item.external ? item.href : u(item.href)}
               class:list={['nav-link', { 'is-active': !item.external && isActive(item.href) }]}
               {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               aria-current={!item.external && isActive(item.href) ? 'page' : undefined}
@@ -29,7 +31,7 @@ const isActive = (href: string) =>
       </ul>
     </nav>
 
-    <a href="/tickets" class="btn btn--primary header-cta">Get Tickets</a>
+    <a href={u('/tickets')} class="btn btn--primary header-cta">Get Tickets</a>
 
     <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -42,14 +44,14 @@ const isActive = (href: string) =>
       {nav.map((item) => (
         <li>
           <a
-            href={item.href}
+            href={item.external ? item.href : u(item.href)}
             {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           >
             {item.label}{item.external && <span aria-hidden="true"> ↗</span>}
           </a>
         </li>
       ))}
-      <li><a href="/tickets" class="btn btn--primary mobile-cta">Get Tickets</a></li>
+      <li><a href={u('/tickets')} class="btn btn--primary mobile-cta">Get Tickets</a></li>
     </ul>
   </div>
 </header>

@@ -29,7 +29,7 @@ const { name, price = null, unit = null, features = [], note = null, featured = 
   {note && <p class="ticket-note">{note}</p>}
 
   <a
-    href="/tickets#buy"
+    href={`${import.meta.env.BASE_URL}tickets#buy`}
     class:list={['btn', featured ? 'btn--primary' : 'btn--ghost', 'ticket-cta']}
     aria-disabled={price ? undefined : 'true'}
   >
