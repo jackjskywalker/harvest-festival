@@ -68,4 +68,16 @@
   --shadow:    0 14px 40px -22px color-mix(in srgb, var(--hf-rust) 70%, transparent);
   --shadow-lg: 0 30px 70px -30px color-mix(in srgb, var(--rust-deep) 80%, transparent);
   --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-fast: 0.18s;
+  --transition-base: 0.22s;
+  --transition-slow: 0.7s;
+
+  /* ---- Opacity scale ---- */
+  --opacity-faint:  0.12;
+  --opacity-light:  0.55;
+  --opacity-medium: 0.85;
+
+  /* ---- Focus ring ---- */
+  --focus-ring:   3px solid var(--hf-tomato);
+  --focus-offset: 2px;
 }

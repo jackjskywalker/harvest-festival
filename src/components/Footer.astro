@@ -100,7 +100,8 @@ const columns = [
   }
   .footer-tagline {
     font-size: var(--step-2);
-    color: var(--hf-clear-skies);
+    color: var(--cream-warm);
+    opacity: 0.85;
     margin-top: var(--space-s);
   }
   .footer-brand :global(.footer-cross) {
@@ -114,7 +115,7 @@ const columns = [
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-l);
   }
-  @media (min-width: 560px) { .footer-cols { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 640px) { .footer-cols { grid-template-columns: repeat(4, 1fr); } }
 
   .footer-col-title {
     font-family: var(--font-head);
@@ -126,11 +127,13 @@ const columns = [
   }
   .footer-col ul { list-style: none; display: grid; gap: 0.55rem; }
   .footer-col a {
-    color: color-mix(in srgb, var(--cream-warm) 86%, transparent);
+    color: var(--cream-warm);
     text-decoration: none;
     font-size: var(--step-0);
+    opacity: 0.82;
   }
-  .footer-col a:hover { color: var(--cream-warm); text-decoration: underline; }
+  .footer-col a:hover { opacity: 1; text-decoration: underline; }
+  .footer-col a:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); border-radius: 2px; opacity: 1; }
 
   .footer-bottom {
     border-top: 1px solid color-mix(in srgb, var(--cream-warm) 18%, transparent);
@@ -144,7 +147,7 @@ const columns = [
     max-width: 60ch;
   }
   .verse { font-size: var(--step-1); margin-top: var(--space-xs); }
-  .verse .script { color: var(--hf-clear-skies); }
+  .verse .script { color: var(--cream-warm); }
   .verse-ref { font-size: var(--step--1); color: color-mix(in srgb, var(--cream-warm) 65%, transparent); }
   .copyright { font-size: var(--step--1); color: color-mix(in srgb, var(--cream-warm) 55%, transparent); margin-top: var(--space-xs); }
 </style>

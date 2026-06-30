@@ -193,13 +193,13 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
 
   .band-tomato { background: var(--hf-tomato); color: var(--cream-warm); }
   .band-cta-inner { display: grid; gap: var(--space-l); align-items: center; }
-  @media (min-width: 820px) { .band-cta-inner { grid-template-columns: 1.6fr 1fr; } }
+  @media (min-width: 768px) { .band-cta-inner { grid-template-columns: 1.6fr 1fr; } }
   .price-note { font-size: var(--step--1); letter-spacing: 0.04em; color: var(--hf-clear-skies); margin-top: var(--space-xs); }
   .band-cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); }
 
   /* Sponsorship callout */
   .sponsor-inner { display: grid; gap: var(--space-xl); align-items: center; }
-  @media (min-width: 880px) { .sponsor-inner { grid-template-columns: 1.5fr 1fr; } }
+  @media (min-width: 960px) { .sponsor-inner { grid-template-columns: 1.5fr 1fr; } }
   .sponsor-copy { display: grid; gap: var(--space-m); justify-items: start; }
   .sponsor-title { font-size: var(--step-4); }
   .tier-preview { font-family: var(--font-head); font-weight: 600; font-size: var(--step-1); color: var(--hf-moss); }

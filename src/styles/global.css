@@ -84,6 +84,7 @@ h1, h2, h3, h4 {
   text-transform: uppercase;
   color: var(--hf-moss);
 }
+.on-dark .eyebrow { color: var(--hf-clear-skies); }
 
 .lede { font-size: var(--step-1); line-height: 1.45; }
 
@@ -104,7 +105,8 @@ h1, h2, h3, h4 {
   white-space: nowrap;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn:focus-visible { outline: 3px solid var(--hf-soot); outline-offset: 3px; }
+.btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-offset); }
+.btn[disabled], .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
 
 .btn--primary {
   background: var(--hf-tomato);

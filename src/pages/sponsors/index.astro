@@ -143,7 +143,7 @@ const tierContent = await Promise.all(
 
   .tier-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: stretch; }
   /* Presenting spans full width on top on wide screens for dominance */
-  @media (min-width: 980px) {
+  @media (min-width: 960px) {
     .tier-grid { grid-template-columns: repeat(3, 1fr); }
     .tier-cell.is-featured { grid-column: 1 / -1; }
     .tier-cell.is-featured :global(.tier-card) { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: var(--space-l); }
@@ -163,7 +163,7 @@ const tierContent = await Promise.all(
     padding: var(--space-xl);
     box-shadow: var(--shadow);
   }
-  @media (min-width: 760px) { .dinner-callout { grid-template-columns: 1.6fr 1fr; } }
+  @media (min-width: 768px) { .dinner-callout { grid-template-columns: 1.6fr 1fr; } }
   .dinner-copy { display: grid; gap: var(--space-m); justify-items: start; }
   .dinner-title { font-size: var(--step-3); }
   .dinner-callout :global(.dinner-mark) { width: min(220px, 70%); color: var(--hf-tomato); justify-self: center; }
@@ -171,7 +171,7 @@ const tierContent = await Promise.all(
   /* Claim form */
   .band-rust { background: var(--hf-rust); color: var(--cream-warm); }
   .claim-inner { display: grid; gap: var(--space-xl); align-items: start; }
-  @media (min-width: 880px) { .claim-inner { grid-template-columns: 0.9fr 1.3fr; } }
+  @media (min-width: 960px) { .claim-inner { grid-template-columns: 0.9fr 1.3fr; } }
   .claim-title { font-size: var(--step-4); color: var(--cream-warm); }
   .claim-copy .lede { color: color-mix(in srgb, var(--cream-warm) 90%, transparent); margin-top: var(--space-m); }
 

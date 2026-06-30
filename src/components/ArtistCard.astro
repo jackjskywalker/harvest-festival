@@ -37,7 +37,12 @@ const { name, role, body, photo, featured = false } = Astro.props;
     border-color: color-mix(in srgb, var(--hf-tomato) 45%, transparent);
     box-shadow: var(--shadow-lg);
   }
-  @media (min-width: 680px) {
+  .artist-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    transition: box-shadow var(--transition-base) var(--ease), transform var(--transition-base) var(--ease);
+  }
+  @media (min-width: 640px) {
     .artist-card { grid-template-columns: 0.8fr 1.4fr; align-items: center; gap: var(--space-l); }
   }
   .artist-photo { border-radius: var(--radius); overflow: hidden; }

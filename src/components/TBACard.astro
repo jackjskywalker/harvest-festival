@@ -29,6 +29,7 @@ const { role = 'More Artists', label = 'To Be Announced', note } = Astro.props;
     opacity: 0.85;
     margin-bottom: var(--space-xs);
   }
-  .tba-title { font-size: var(--step-2); color: var(--hf-rust); }
+  .tba-card:hover { background: color-mix(in srgb, var(--hf-moss) 14%, var(--hf-cream)); box-shadow: var(--shadow); }
+  .tba-title { font-size: var(--step-2); color: var(--hf-moss); }
   .tba-note { font-size: var(--step--1); color: var(--hf-moss); max-width: 28ch; }
 </style>

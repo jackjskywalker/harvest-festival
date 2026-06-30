@@ -35,9 +35,10 @@ const { eyebrow, variant = 'rust', stars = true, class: className = '' } = Astro
   .ph-inner { position: relative; display: grid; gap: var(--space-m); max-width: 52rem; }
   .ph-eyebrow { color: var(--hf-clear-skies); }
   .ph-cream .ph-eyebrow { color: var(--hf-moss); }
+  .ph-tomato .ph-eyebrow { color: var(--cream-warm); }
   .ph-title { font-size: var(--step-5); }
   .ph-rust .ph-title, .ph-tomato .ph-title { color: var(--cream-warm); }
   .ph-sub:empty, .ph-actions:empty { display: none; }
-  .ph-sub { font-size: var(--step-1); color: color-mix(in srgb, currentColor 88%, transparent); max-width: 46ch; }
+  .ph-sub { font-size: var(--step-1); color: color-mix(in srgb, currentColor 95%, transparent); max-width: 46ch; }
   .ph-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-xs); }
 </style>
