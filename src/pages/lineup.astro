@@ -8,11 +8,12 @@ import { event } from '../data/site';
 import { u } from '../utils/url';
 
 const all = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
-const headliner = all.find((a) => a.data.kind === 'headliner');
+const headliners = all.filter((a) => a.data.kind === 'headliner' && a.data.status === 'confirmed');
+const headlinerTBA = all.filter((a) => a.data.kind === 'headliner' && a.data.status === 'tba');
 const speakers = all.filter((a) => a.data.kind === 'speaker');
 const extraArtists = all.filter((a) => a.data.kind === 'artist' && a.data.status === 'confirmed');
 
-// Pre-render speaker bios to HTML.
+// Pre-render bios to HTML.
 const speakerContent = await Promise.all(
   speakers.map(async (s) => {
     const { Content } = await s.render();
@@ -22,24 +23,34 @@ const speakerContent = await Promise.all(
 ---
 <BaseLayout
   title="Lineup - Harvest Festival"
-  description="See who's taking the stage at the Harvest Festival on October 24, 2026 - speakers Tim Tebow and Jonathan Pokluda, with more artists to be announced."
+  description="See who's taking the stage at the Harvest Festival on October 24, 2026 - Red Rocks Worship, KB, speakers Joshua Broome, Bryce Crawford, Shawn Johnson, and more."
 >
   <PageHero eyebrow="The Lineup" variant="rust">
     The Lineup.
     <Fragment slot="sub">{event.date} · {event.venue}, {event.cityShort}</Fragment>
   </PageHero>
 
-  <!-- Headliner -->
+  <!-- Headliners -->
   <section class="section">
     <div class="container">
-      <p class="eyebrow block-label">Headlining Worship</p>
-      {headliner && (
-        <TBACard
-          role="Headlining Worship"
-          label={headliner.data.tbaLabel ?? 'To Be Announced'}
-          note="Our headlining worship act will be announced soon."
-        />
-      )}
+      <p class="eyebrow block-label">Headliners</p>
+      <div class="artist-stack">
+        {headliners.map((h, i) => (
+          <ArtistCard
+            name={h.data.name}
+            role={h.data.role}
+            photo={h.data.photo || undefined}
+            featured={i === 0}
+          />
+        ))}
+        {headlinerTBA.map((h) => (
+          <TBACard
+            role={h.data.role}
+            label={h.data.tbaLabel ?? 'To Be Announced'}
+            note="More headliners to be announced."
+          />
+        ))}
+      </div>
     </div>
   </section>
 
@@ -62,15 +73,14 @@ const speakerContent = await Promise.all(
     </div>
   </section>
 
-  <!-- Supporting artists -->
+  <!-- Artists -->
   <section class="section">
     <div class="container">
-      <p class="eyebrow block-label">More Artists</p>
+      <p class="eyebrow block-label">Artists</p>
       <div class="more-grid">
         {extraArtists.map((a) => (
           <ArtistCard name={a.data.name} role={a.data.role} photo={a.data.photo || undefined} />
         ))}
-        <TBACard role="More Artists" label="More to be announced" note="Additional artists are being confirmed - check back soon." />
       </div>
 
       <div class="lineup-cta">
@@ -86,6 +96,5 @@ const speakerContent = await Promise.all(
   .artist-stack { display: grid; gap: var(--space-l); }
   .more-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
   .lineup-cta { display: flex; justify-content: center; margin-top: var(--space-xl); }
-  /* bios inside the slot inherit card styling */
   .artist-bio :global(p) { margin-bottom: 0.6em; }
 </style>
