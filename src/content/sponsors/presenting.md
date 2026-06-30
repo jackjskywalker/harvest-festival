@@ -8,5 +8,4 @@ tagline: The highest visibility position at the Harvest Festival. Your name is i
 order: 1
 ---
 
-The highest visibility position at the Harvest Festival. Your name is in the event
-title - *"[Your Name] Presents: The Harvest Festival."* One slot. First and only.
+*"The Harvest Festival, Presented by [Your Company]"* — your brand is woven into the event title, every marketing piece, every ticket, every social post. Private artist dinner for 10. 60-second brand video on the main screen before the headliner. One slot, ever.

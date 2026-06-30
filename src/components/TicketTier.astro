@@ -8,8 +8,10 @@ interface Props {
   features?: string[];
   note?: string | null;
   featured?: boolean;
+  onSale?: boolean;
+  saleUrl?: string | null;
 }
-const { name, price = null, unit = null, features = [], note = null, featured = false } = Astro.props;
+const { name, price = null, unit = null, features = [], note = null, featured = false, onSale = false, saleUrl = null } = Astro.props;
 ---
 <article class:list={['ticket-tier', { featured }]}>
   {featured && <span class="ticket-flag">Most popular</span>}
@@ -29,11 +31,11 @@ const { name, price = null, unit = null, features = [], note = null, featured = 
   {note && <p class="ticket-note">{note}</p>}
 
   <a
-    href={`${import.meta.env.BASE_URL}tickets#buy`}
+    href={onSale && saleUrl ? saleUrl : '#group'}
     class:list={['btn', featured ? 'btn--primary' : 'btn--ghost', 'ticket-cta']}
-    aria-disabled={price ? undefined : 'true'}
+    aria-disabled={onSale ? undefined : 'true'}
   >
-    {price ? 'Buy Tickets' : 'Notify Me'}
+    {onSale ? 'Buy Tickets' : price ? 'On Sale Soon' : 'Notify Me'}
   </a>
 </article>
 

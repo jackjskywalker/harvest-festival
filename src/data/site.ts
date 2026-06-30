@@ -44,36 +44,111 @@ export const nav = [
   { label: 'About RTH', href: org.url, external: true },
 ];
 
-/* Ticket tiers. Prices are intentionally null until confirmed →
-   the UI renders a clear "Price - TBD" state instead of a number. */
+/* Ticket tiers — confirmed prices. onSale toggles the buy button active.
+   Set onSale: true and add saleUrl when the ticketing platform goes live. */
 export const ticketTiers = [
   {
-    name: 'General Admission',
-    price: null as string | null,
+    name: 'VIP',
+    price: '$85' as string | null,
     unit: 'per person',
     features: [
-      'Full festival access',
-      'All stages',
-      'Gospel outreach area',
-      'Kids zone',
+      'VIP reserved seating section',
+      'Dedicated VIP entrance',
+      'Full festival access — all stages',
     ],
+    note: null as string | null,
     featured: true,
+    capacity: 800,
+    onSale: false,
+    saleUrl: null as string | null,
   },
   {
-    name: 'Family Pack',
-    price: null as string | null,
-    unit: null as string | null,           // TODO: e.g. "2 adults + 3 kids"
-    features: ['Best value for families attending together'],
-    note: 'Details coming soon',
+    name: 'Pit',
+    price: '$63' as string | null,
+    unit: 'per person',
+    features: [
+      'Pit access — closest to the main stage',
+      'Standing room, front of house',
+      'Full festival access',
+    ],
+    note: null as string | null,
     featured: false,
+    capacity: 1000,
+    onSale: false,
+    saleUrl: null as string | null,
   },
   {
-    name: 'VIP',
-    price: null as string | null,
-    unit: null as string | null,
-    features: [],                          // TODO: VIP benefits - early entry, dedicated section
-    note: 'Benefits to be announced',
+    name: 'Seats — Close',
+    price: '$59' as string | null,
+    unit: 'per person',
+    features: [
+      'Reserved seat, closest seating section',
+      'Excellent sightlines to main stage',
+      'Full festival access',
+    ],
+    note: null as string | null,
     featured: false,
+    capacity: 1000,
+    onSale: false,
+    saleUrl: null as string | null,
+  },
+  {
+    name: 'Seats — Middle',
+    price: '$49' as string | null,
+    unit: 'per person',
+    features: [
+      'Reserved seat, middle seating section',
+      'Full festival access',
+    ],
+    note: null as string | null,
+    featured: false,
+    capacity: 1000,
+    onSale: false,
+    saleUrl: null as string | null,
+  },
+  {
+    name: 'Seats — Further',
+    price: '$40' as string | null,
+    unit: 'per person',
+    features: [
+      'Reserved seat, further seating section',
+      'Full festival access',
+    ],
+    note: null as string | null,
+    featured: false,
+    capacity: 2000,
+    onSale: false,
+    saleUrl: null as string | null,
+  },
+  {
+    name: 'Lawn General Admission',
+    price: '$28' as string | null,
+    unit: 'per person',
+    features: [
+      'Lawn access — open field with great views',
+      'Full festival access — all stages',
+      'Kids zone, vendor village, petting zoo',
+    ],
+    note: null as string | null,
+    featured: false,
+    capacity: 4000,
+    onSale: false,
+    saleUrl: null as string | null,
+  },
+  {
+    name: 'VIP Backstage',
+    price: '$100' as string | null,
+    unit: 'per person',
+    features: [
+      'Backstage access',
+      'VIP reserved seating',
+      'All festival access',
+    ],
+    note: 'Available to donors and ministry partners only. Not sold publicly — contact us to inquire.',
+    featured: false,
+    capacity: 150,
+    onSale: false,
+    saleUrl: null as string | null,
   },
 ];
 
@@ -86,22 +161,25 @@ export const stats = [
 ];
 
 /* Benefits comparison matrix for the sponsor page.
-   tiers array maps to the four sponsor tiers (Presenting, Stage, Field, Banner). */
+   Column order: Presenting · Main Stage · Side Stage · Wristband · Prog. Cover · Chair · Signage · Banner */
 export const sponsorBenefits = {
-  tiers: ['Presenting', 'Stage', 'Field', 'Banner'],
-  prices: ['$50,000', '$25,000', '$10,000', '$5,000'],
+  tiers: ['Presenting', 'Main Stage', 'Side Stage', 'Wristband', 'Prog. Cover', 'Chair', 'Signage', 'Banner'],
+  prices: ['$50K', '$30K', '$20K', '$15K', '$15K', '$10K', '$10K', '$5K'],
   rows: [
-    { label: 'Name in event title', has: [true, false, false, false] },
-    { label: 'Main stage naming rights', has: [true, true, false, false] },
-    { label: 'Artist Dinner invitation', has: [true, true, false, false] },
-    { label: 'On-site signage (large)', has: [true, true, true, false] },
-    { label: 'Banner placement', has: [true, true, true, true] },
-    { label: 'Logo in event program', has: [true, true, true, true] },
-    { label: 'Social media recognition', has: [true, true, true, true] },
-    { label: 'Dedicated sponsor post', has: [true, true, false, false] },
-    { label: 'Website logo placement', has: [true, true, true, true] },
-    { label: 'RTH newsletter feature', has: [true, true, false, false] },
-    // VIP ticket counts per tier are unconfirmed → rendered as "TBD".
-    { label: 'VIP tickets included', has: ['TBD', 'TBD', 'TBD', 'TBD'] },
+    { label: 'Name in event title',        has: [true,        false,       false,       false,  false,    false,  false,  false] },
+    { label: 'Stage named after sponsor',  has: [false,       'Main',      'Side',      false,  false,    false,  false,  false] },
+    { label: 'Artist Dinner (10 guests)',  has: [true,        false,       false,       false,  false,    false,  false,  false] },
+    { label: 'Artist meet & greet',        has: ['10 guests', '6 guests',  'Photo op',  false,  false,    false,  false,  false] },
+    { label: 'Brand video on main screen', has: ['60 sec',    false,       false,       false,  false,    false,  false,  false] },
+    { label: 'Primary stage logo',         has: [true,        false,       false,       false,  false,    false,  false,  false] },
+    { label: 'Stage backdrop logo',        has: [false,       true,        true,        false,  false,    false,  false,  false] },
+    { label: 'Exclusive physical asset',   has: [false,       false,       false,       'Wristbands', 'Prog. cover', 'Chair inserts', 'All signage', '1 banner'] },
+    { label: 'Backstage access',           has: ['10 guests', '4 guests',  false,       false,  false,    false,  false,  false] },
+    { label: 'VIP reserved seating',       has: ['20 seats',  '12 seats',  '8 seats',   '6 seats', '6 seats', '4 seats', '4 seats', false] },
+    { label: 'GA passes',                  has: [false,       false,       false,       false,  false,    false,  false,  '4 passes'] },
+    { label: 'Dedicated social post',      has: [true,        true,        true,        true,   true,     true,   true,   'Recognition'] },
+    { label: 'Logo in printed program',    has: [true,        true,        true,        true,   'Cover',  true,   true,   true] },
+    { label: 'Logo on event website',      has: [true,        true,        true,        true,   true,     true,   true,   true] },
+    { label: 'First right of refusal',     has: [true,        false,       false,       false,  false,    false,  false,  false] },
   ] as { label: string; has: (boolean | string)[] }[],
 };

@@ -18,7 +18,7 @@ const tierContent = await Promise.all(
 ---
 <BaseLayout
   title="Sponsor the Harvest Festival"
-  description="Become a founding sponsor of the Harvest Festival - 10,000 to 15,000 expected attendees, national artists, and a Gospel mission. Presenting, Stage, Field, and Banner tiers from $5,000 to $50,000."
+  description="Become a founding sponsor of the Harvest Festival - 10,000 to 15,000 expected attendees, national artists, and a Gospel mission. Eight tiers from $5,000 Banner Partner to $50,000 Presenting Sponsor."
 >
   <PageHero eyebrow="Founding Sponsors" variant="rust">
     Be a founding sponsor.
@@ -141,10 +141,10 @@ const tierContent = await Promise.all(
   .center-label { text-align: center; margin-bottom: var(--space-xl); }
   .band-cream { background: var(--cream-warm); }
 
-  .tier-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: stretch; }
+  .tier-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: stretch; }
   /* Presenting spans full width on top on wide screens for dominance */
   @media (min-width: 960px) {
-    .tier-grid { grid-template-columns: repeat(3, 1fr); }
+    .tier-grid { grid-template-columns: repeat(4, 1fr); }
     .tier-cell.is-featured { grid-column: 1 / -1; }
     .tier-cell.is-featured :global(.tier-card) { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: var(--space-l); }
   }

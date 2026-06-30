@@ -6,7 +6,7 @@ import { event, ticketTiers } from '../data/site';
 ---
 <BaseLayout
   title="Tickets - Harvest Festival"
-  description="Get your tickets to the Harvest Festival - October 24, 2026 at Maranatha Farms in Forest, Virginia. General admission, family packs, and group rates for churches and schools."
+  description="Get your tickets to the Harvest Festival - October 24, 2026 at Maranatha Farms in Forest, Virginia. VIP, Pit, reserved seats, and lawn general admission starting at $28."
 >
   <PageHero eyebrow="Tickets" variant="tomato">
     Get your tickets.
@@ -27,12 +27,13 @@ import { event, ticketTiers } from '../data/site';
             features={t.features}
             note={t.note}
             featured={t.featured}
+            onSale={t.onSale}
+            saleUrl={t.saleUrl}
           />
         ))}
       </div>
       <p class="ticket-disclaimer">
-        Pricing and on-sale date will be confirmed soon. Want to be first in line?
-        <a href="#group">Tell us you're coming.</a>
+        Tickets go on sale soon. Register below and we'll let you know the moment they're available.
       </p>
     </div>
   </section>
