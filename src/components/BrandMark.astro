@@ -28,6 +28,15 @@ if (!svg) {
   throw new Error(`BrandMark: unknown asset "${name}". Available: ${Object.keys(marks).join(', ')}`);
 }
 
+// Make all IDs unique per instance so multiple marks on the same page don't
+// share clipPath/mask IDs and corrupt each other's rendering.
+const uid = `bm-${name}-${Math.random().toString(36).slice(2, 7)}`;
+const ids: string[] = [];
+svg = svg.replace(/\bid="([^"]+)"/g, (_, id) => { ids.push(id); return `id="${uid}-${id}"`; });
+for (const id of ids) {
+  svg = svg.replace(new RegExp(`url\\(#${id}\\)`, 'g'), `url(#${uid}-${id})`);
+}
+
 // Strip the inline fixed sizing if any slipped through; make responsive + a11y.
 svg = svg.replace(/<svg /, () => {
   const role = decorative ? 'role="presentation" aria-hidden="true"' : `role="img" aria-label="${title ?? name}"`;
