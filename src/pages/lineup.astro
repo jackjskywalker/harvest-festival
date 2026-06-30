@@ -94,7 +94,13 @@ const speakerContent = await Promise.all(
   .block-label { margin-bottom: var(--space-l); }
   .band-cream { background: var(--cream-warm); }
   .artist-stack { display: grid; gap: var(--space-l); }
-  .more-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  /* Horizontal photo+bio layout only for full-width stack cards, not narrow grid cards */
+  @media (min-width: 640px) {
+    .artist-stack :global(.artist-card) { grid-template-columns: 0.8fr 1.4fr; align-items: center; gap: var(--space-l); }
+  }
+  .more-grid { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  /* Compact artist names for grid cards */
+  .more-grid :global(.artist-name) { font-size: var(--step-1); }
   .lineup-cta { display: flex; justify-content: center; margin-top: var(--space-xl); }
   .artist-bio :global(p) { margin-bottom: 0.6em; }
 </style>

@@ -42,12 +42,10 @@ const { name, role, body, photo, featured = false } = Astro.props;
     transform: translateY(-2px);
     transition: box-shadow var(--transition-base) var(--ease), transform var(--transition-base) var(--ease);
   }
-  @media (min-width: 640px) {
-    .artist-card { grid-template-columns: 0.8fr 1.4fr; align-items: center; gap: var(--space-l); }
-  }
   .artist-photo { border-radius: var(--radius); overflow: hidden; }
   .artist-photo img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
-  .artist-name { font-size: var(--step-3); margin-top: 0.15rem; }
+  .artist-name { font-size: var(--step-2); margin-top: 0.15rem; }
+  .artist-card.featured .artist-name { font-size: var(--step-3); }
   .artist-bio { margin-top: var(--space-s); color: color-mix(in srgb, var(--hf-soot) 88%, transparent); }
   .artist-bio :global(p) { margin-bottom: 0.6em; }
 </style>
