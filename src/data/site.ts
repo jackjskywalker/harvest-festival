@@ -44,7 +44,7 @@ export const nav = [
   { label: 'About RTH', href: org.url, external: true },
 ];
 
-/* Ticket tiers — confirmed prices. onSale toggles the buy button active.
+/* Ticket tiers - confirmed prices. onSale toggles the buy button active.
    Set onSale: true and add saleUrl when the ticketing platform goes live. */
 export const ticketTiers = [
   {
@@ -54,7 +54,7 @@ export const ticketTiers = [
     features: [
       'VIP reserved seating section',
       'Dedicated VIP entrance',
-      'Full festival access — all stages',
+      'Full festival access, all stages',
     ],
     note: null as string | null,
     featured: true,
@@ -67,7 +67,7 @@ export const ticketTiers = [
     price: '$63' as string | null,
     unit: 'per person',
     features: [
-      'Pit access — closest to the main stage',
+      'Pit access, closest to the main stage',
       'Standing room, front of house',
       'Full festival access',
     ],
@@ -78,7 +78,7 @@ export const ticketTiers = [
     saleUrl: null as string | null,
   },
   {
-    name: 'Seats — Close',
+    name: 'Seats - Close',
     price: '$59' as string | null,
     unit: 'per person',
     features: [
@@ -93,7 +93,7 @@ export const ticketTiers = [
     saleUrl: null as string | null,
   },
   {
-    name: 'Seats — Middle',
+    name: 'Seats - Middle',
     price: '$49' as string | null,
     unit: 'per person',
     features: [
@@ -107,7 +107,7 @@ export const ticketTiers = [
     saleUrl: null as string | null,
   },
   {
-    name: 'Seats — Further',
+    name: 'Seats - Further',
     price: '$40' as string | null,
     unit: 'per person',
     features: [
@@ -125,8 +125,8 @@ export const ticketTiers = [
     price: '$28' as string | null,
     unit: 'per person',
     features: [
-      'Lawn access — open field with great views',
-      'Full festival access — all stages',
+      'Lawn access, open field with great views',
+      'Full festival access, all stages',
       'Kids zone, vendor village, petting zoo',
     ],
     note: null as string | null,
@@ -144,7 +144,7 @@ export const ticketTiers = [
       'VIP reserved seating',
       'All festival access',
     ],
-    note: 'Available to donors and ministry partners only. Not sold publicly — contact us to inquire.',
+    note: 'Available to donors and ministry partners only. Not sold publicly, contact us to inquire.',
     featured: false,
     capacity: 150,
     onSale: false,

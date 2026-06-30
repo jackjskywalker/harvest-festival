@@ -6,13 +6,18 @@ import SectionHeading from '../components/SectionHeading.astro';
 import BrandMark from '../components/BrandMark.astro';
 import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import StarScatter from '../components/StarScatter.astro';
-import { event, org } from '../data/site';
+import { event, org, ticketTiers } from '../data/site';
 import { u } from '../utils/url';
 
-// Lineup tease - confirmed speakers + headliner TBA, sorted by order.
+// Lineup tease - confirmed headliners + speakers, sorted by order.
 const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
-const headliner = artists.find((a) => a.data.kind === 'headliner');
+const headliners = artists.filter((a) => a.data.kind === 'headliner' && a.data.status === 'confirmed');
+const headlinerTBA = artists.find((a) => a.data.kind === 'headliner' && a.data.status === 'tba');
 const speakers = artists.filter((a) => a.data.kind === 'speaker');
+const lowestPrice = ticketTiers
+  .map((t) => t.price)
+  .filter((p): p is string => !!p)
+  .reduce((min, p) => (Number(p.replace('$', '')) < Number(min.replace('$', '')) ? p : min));
 ---
 <BaseLayout
   title="Harvest Festival - Oct 24, 2026 · Maranatha Farms, Forest VA"
@@ -27,11 +32,19 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
       <SectionHeading eyebrow="Lineup">The artists.</SectionHeading>
 
       <ul class="lineup-grid" role="list">
-        <li class="lineup-plate is-tba">
-          <BrandMark name="hf-stars" decorative class="plate-mark" />
-          <span class="plate-name">{headliner?.data.tbaLabel ?? 'Headlining Artist - TBA'}</span>
-          <span class="plate-role">Headliner</span>
-        </li>
+        {headliners.map((h) => (
+          <li class="lineup-plate is-headliner">
+            <span class="plate-name">{h.data.name}</span>
+            <span class="plate-role">{h.data.role}</span>
+          </li>
+        ))}
+        {headlinerTBA && (
+          <li class="lineup-plate is-tba">
+            <BrandMark name="hf-stars" decorative class="plate-mark" />
+            <span class="plate-name">{headlinerTBA.data.tbaLabel ?? 'Headlining Artist - TBA'}</span>
+            <span class="plate-role">Headliner</span>
+          </li>
+        )}
         {speakers.map((s) => (
           <li class="lineup-plate">
             <span class="plate-name">{s.data.name}</span>
@@ -72,7 +85,7 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
         <p class="band-body">
           General admission. Family packages available. Group rates for churches and schools.
         </p>
-        <p class="price-note">Pricing announced soon - be the first to know.</p>
+        <p class="price-note">Starting at {lowestPrice} - on sale soon.</p>
       </div>
       <div class="band-cta-actions">
         <a href={u("/tickets")} class="btn btn--cream">Buy Tickets</a>
@@ -172,6 +185,9 @@ const speakers = artists.filter((a) => a.data.kind === 'speaker');
   }
   .plate-name { font-family: var(--font-display); font-style: italic; font-weight: 800; font-size: var(--step-2); color: var(--hf-rust); }
   .plate-role { font-size: var(--step--1); letter-spacing: 0.16em; text-transform: uppercase; color: var(--hf-moss); }
+  .lineup-plate.is-headliner { background: var(--hf-tomato); border-color: var(--hf-tomato); }
+  .lineup-plate.is-headliner .plate-name { color: var(--cream-warm); }
+  .lineup-plate.is-headliner .plate-role { color: color-mix(in srgb, var(--cream-warm) 85%, transparent); }
   .lineup-plate.is-tba { background: color-mix(in srgb, var(--hf-tomato) 10%, var(--hf-cream)); border-color: color-mix(in srgb, var(--hf-tomato) 30%, transparent); }
   .lineup-plate.is-tba .plate-mark { width: 64px; color: var(--hf-tomato); margin-bottom: 0.3rem; }
   .lineup-plate.is-more { background: color-mix(in srgb, var(--hf-moss) 12%, var(--hf-cream)); border-style: dashed; }

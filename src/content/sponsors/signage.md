@@ -4,7 +4,7 @@ price: 10000
 slots: 1
 featured: false
 artistDinner: false
-tagline: Your brand embedded in the practical fabric of the day — from arrival to exit.
+tagline: Your brand embedded in the practical fabric of the day, from arrival to exit.
 order: 7
 ---
 

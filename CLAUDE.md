@@ -86,16 +86,20 @@ Event:        Harvest Festival
 Date:         October 24, 2026
 Venue:        Maranatha Farms, Forest, Virginia
 Attendance:   10,000–15,000 expected
-Speakers:     Tim Tebow, Jonathan Pokluda (confirmed)
-Headliner:    TBA — do not name until publicly confirmed
-Ticket price: TBD — do not display until confirmed
+Headliners:   Red Rocks Worship, KB (confirmed) — additional headliner slot still TBA
+Speakers:     Joshua Broome, Bryce Crawford, Shawn Johnson (confirmed)
+Artists:      Living Room, Grace Runkle, Henry Roe, Liberty Worship Collective,
+              JJ Hasulube, Henry Roe & Brennely Brown (confirmed)
+Ticket price: Confirmed, $28–$100 across 7 tiers (not yet on sale — see src/data/site.ts)
 Parent org:   Reap the Harvest Foundation, Inc.
 EIN:          99-1683886
 ```
 No street address displayed anywhere. City/state only.
 
-Sponsorship tiers: Presenting $50,000 ×1 · Stage $25,000 ×2 · Field $10,000 ×3 ·
-Banner $5,000 ×4 · Total $150,000. Artist Dinner = Presenting + Stage only.
+Sponsorship tiers (8): Presenting $50,000 ×1 · Main Stage $30,000 ×1 · Side Stage $20,000 ×1 ·
+Wristband $15,000 ×1 · Program Cover $15,000 ×1 · Chair Experience $10,000 ×1 ·
+Event Signage $10,000 ×1 · Banner Partner $5,000 ×1. Artist Dinner = Presenting Sponsor only
+(see `artistDinner` flag in src/content/sponsors/*.md — only presenting.md is true).
 
 ---
 
