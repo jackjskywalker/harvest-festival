@@ -34,6 +34,11 @@ export const org = {
   url: 'https://reaptheharvestfoundation.com',
 };
 
+export const social = {
+  instagram: 'harvestlyh',
+  instagramUrl: 'https://instagram.com/harvestlyh',
+};
+
 /* Primary navigation. "About RTH" is the only outbound link to the org site. */
 export const nav = [
   { label: 'Home', href: '/' },

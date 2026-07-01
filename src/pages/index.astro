@@ -6,7 +6,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import BrandMark from '../components/BrandMark.astro';
 import PhotoPlaceholder from '../components/PhotoPlaceholder.astro';
 import StarScatter from '../components/StarScatter.astro';
-import { event, org, ticketTiers } from '../data/site';
+import { event, org, ticketTiers, social } from '../data/site';
 import { u } from '../utils/url';
 
 // Lineup tease - confirmed headliners + speakers, sorted by order.
@@ -94,7 +94,26 @@ const lowestPrice = ticketTiers
     </div>
   </section>
 
-  <!-- BLOCK 5 - Sponsorship callout (checkerboard texture) -->
+  <!-- BLOCK 5 - Instagram Follow Along -->
+  <section class="section band-cream">
+    <div class="container ig-inner">
+      <div class="ig-copy">
+        <p class="eyebrow">Follow Along</p>
+        <h2 class="display ig-title">Stay in the loop.</h2>
+        <p class="lede">Updates, behind-the-scenes, and announcements from the Harvest Festival.</p>
+        <a href={social.instagramUrl} target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+          Follow @{social.instagram}&nbsp;↗
+        </a>
+      </div>
+      <div class="ig-grid" aria-hidden="true">
+        {[1,2,3,4,5,6].map(() => (
+          <PhotoPlaceholder label="Instagram post" ratio="1 / 1" mark="none" tone="cream" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOCK 6 - Sponsorship callout -->
   <section class="section sponsor-callout">
     <div class="container sponsor-inner">
       <div class="sponsor-copy">
@@ -106,7 +125,7 @@ const lowestPrice = ticketTiers
           the Presenting Sponsor to Banner partners - every level funds free camps and reaches
           thousands.
         </p>
-        <p class="tier-preview">Presenting · Stage · Field · Banner</p>
+        <p class="tier-preview">Presenting · Main Stage · Side Stage · Banner Partner</p>
         <a href={u("/sponsors")} class="btn btn--primary">View Sponsorship Tiers</a>
       </div>
       <div class="sponsor-deco" aria-hidden="true">
@@ -211,6 +230,14 @@ const lowestPrice = ticketTiers
   @media (min-width: 768px) { .band-cta-inner { grid-template-columns: 1.6fr 1fr; } }
   .price-note { font-size: var(--step--1); letter-spacing: 0.04em; color: var(--hf-clear-skies); margin-top: var(--space-xs); }
   .band-cta-actions { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+
+  /* Instagram follow */
+  .band-cream { background: var(--cream-warm); }
+  .ig-inner { display: grid; gap: var(--space-xl); align-items: center; }
+  @media (min-width: 768px) { .ig-inner { grid-template-columns: 1fr 1fr; } }
+  .ig-copy { display: grid; gap: var(--space-m); justify-items: start; }
+  .ig-title { font-size: var(--step-4); }
+  .ig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-s); }
 
   /* Sponsorship callout */
   .sponsor-inner { display: grid; gap: var(--space-xl); align-items: center; }

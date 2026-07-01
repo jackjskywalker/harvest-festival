@@ -25,13 +25,6 @@ const columns = [
     ],
   },
   {
-    title: 'Get Involved',
-    links: [
-      { label: 'Volunteer', href: '/volunteer' },
-      { label: 'Press + Media', href: '/press' },
-    ],
-  },
-  {
     title: 'Mission',
     links: [
       { label: 'Why It Matters', href: '/why-it-matters' },
@@ -115,7 +108,7 @@ const columns = [
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-l);
   }
-  @media (min-width: 640px) { .footer-cols { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 640px) { .footer-cols { grid-template-columns: repeat(3, 1fr); } }
 
   .footer-col-title {
     font-family: var(--font-head);
@@ -140,6 +133,8 @@ const columns = [
     padding-block: var(--space-l) var(--space-2xl);
     display: grid;
     gap: var(--space-xs);
+    text-align: center;
+    justify-items: center;
   }
   .legal {
     font-size: var(--step--1);
